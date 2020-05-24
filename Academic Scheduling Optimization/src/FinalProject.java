@@ -1,6 +1,7 @@
 class FinalProject {
     public static void main(String[] args) {
         //Implenemtar grafo para distncias entre bloques
+        System.out.println("Hola");
     }
 }
 
