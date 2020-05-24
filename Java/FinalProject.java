@@ -1,5 +1,7 @@
 class FinalProject {
-    //TODO: Implementar grafo para las distancias entre bloques
+    public static void main(String[] args) {
+        //Implenemtar grafo para distncias entre bloques
+    }
 }
 
 class Group {
