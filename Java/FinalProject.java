@@ -1,7 +1,5 @@
 class FinalProject {
-    public static void main(String[] args) {
-        System.out.println("Hola mundo");
-    }
+    //TODO: Implementar grafo para las distancias entre bloques
 }
 
 class Group {
