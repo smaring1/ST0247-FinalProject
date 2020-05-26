@@ -3,7 +3,7 @@ import java.io.FileReader;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedList;
- // PRUEBA GIT PETRO
+
 class FinalProject {
 
      public static final String SEPARATOR=";";
@@ -11,24 +11,25 @@ class FinalProject {
 
     public static void main(String[] args) {
         //Implenemtar grafo para distncias entre bloques
-        Graph map = new Graph();
+        Graph prueba = new Graph();
         Vertex v = new Vertex("nodo 1");
         Vertex w = new Vertex("nodo 2");
-        map.AddVertex(v);
-        map.AddVertex(w);
-        map.AddEdge(v, w, 4);
-        map.printGraph();
+        prueba.AddVertex(v);
+        prueba.AddVertex(w);
+        prueba.AddEdge(v, w, 4);
+        prueba.printGraph();
         //Llenar con la lectura de los datos
-        DataFillGroup();
+        Graph map = dataFillMap("DistanciasBloques.csv");
+        dataFillGroup();
     }
 
 
-    public static void DataFillGroup(){
+    public static void dataFillGroup(){
         BufferedReader br = null;
         LinkedList<Group> group = new LinkedList<Group>();
         int cont = 0;
         try {
-            br =new BufferedReader(new FileReader("C:\\Users\\jrami\\OneDrive\\Documentos\\EAFIT\\GIT\\ST0247-FinalProject\\Academic Scheduling Optimization\\estudiante_curso_grupo.csv"));
+            br =new BufferedReader(new FileReader("estudiante_curso_grupo.csv"));
             String line = br.readLine();
             while (null!=line) {
                 String [] fields = line.split(",");
@@ -46,12 +47,12 @@ class FinalProject {
         }
     }
 
-     public static void DataFillEnrollment(){
+     public static void dataFillEnrollment(){
          BufferedReader br = null;
          LinkedList<Enrollment> enroll = new LinkedList<Enrollment>();
          int cont = 0;
          try {
-             br =new BufferedReader(new FileReader("C:\\Users\\jrami\\OneDrive\\Documentos\\EAFIT\\GIT\\ST0247-FinalProject\\Academic Scheduling Optimization\\grupos_semestre.csv"));
+             br =new BufferedReader(new FileReader("grupos_semestre.csv"));
              String line = br.readLine();
              while (null!=line) {
                  String [] fields = line.split(",");
@@ -69,12 +70,12 @@ class FinalProject {
          }
      }
 
-     public static void DataFillClassroom(){
+     public static void dataFillClassroom(){
          BufferedReader br = null;
          LinkedList<Classroom> classrooms = new LinkedList<Classroom>();
          int cont = 0;
          try {
-             br =new BufferedReader(new FileReader("C:\\Users\\jrami\\OneDrive\\Documentos\\EAFIT\\GIT\\ST0247-FinalProject\\Academic Scheduling Optimization\\grupos_semestre.csv"));
+             br =new BufferedReader(new FileReader("grupos_semestre.csv"));
              String line = br.readLine();
              while (null!=line) {
                  String [] fields = line.split(",");
@@ -90,6 +91,26 @@ class FinalProject {
          } catch (Exception e) {
 
          }
+     }
+
+     public static Graph dataFillMap(String file) {
+        Graph map = new Graph();
+        BufferedReader br = null;
+        int cont = 0;
+        try {
+            br = new BufferedReader(new FileReader(file));
+            String line = br.readLine();
+            while (null != line) {
+                String [] fields = line.split(",");
+                fields = removeTrailingQuotes(fields);
+                System.out.println(Arrays.toString(fields));
+                //TODO: Llenar primero con los vertices y despues con los pesos
+                line = br.readLine();
+            }
+        } catch (Exception e) {
+
+        }
+        return map;
      }
 
      private static String[] removeTrailingQuotes(String[] fields) {
