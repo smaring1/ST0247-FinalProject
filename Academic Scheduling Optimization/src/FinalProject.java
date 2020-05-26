@@ -1,4 +1,5 @@
-import java.util.*;
+import java.util.HashSet;
+import java.util.LinkedList;
 
 class FinalProject {
     public static void main(String[] args) {
@@ -164,100 +165,79 @@ class Distance {
     }
 }
 
-class Graph<T> {
+class Vertex{
+    private String name;
+    private LinkedList<Edge> edgeList;
 
-    // We use Hashmap to store the edges in the graph
-    private Map<T, List<T> > map = new HashMap<>();
-
-    // This function adds a new vertex to the graph
-    public void addVertex(T s)
-    {
-        map.put(s, new LinkedList<T>());
+    public Vertex(String name){
+        this.name = name;
+        edgeList = new LinkedList<>();
     }
 
-    // This function adds the edge
-    // between source to destination
-    public void addEdge(T source,
-                        T destination,
-                        boolean bidirectional)
-    {
-
-        if (!map.containsKey(source))
-            addVertex(source);
-
-        if (!map.containsKey(destination))
-            addVertex(destination);
-
-        map.get(source).add(destination);
-        if (bidirectional == true) {
-            map.get(destination).add(source);
-        }
+    public String getName(){
+        return name;
     }
 
-    // This function gives the count of vertices
-    public void getVertexCount()
-    {
-        System.out.println("The graph has "
-                + map.keySet().size()
-                + " vertex");
+    public LinkedList<Edge> getEdges(){
+        return edgeList;
+    }
+}
+
+class Edge{
+    private int weight;
+    private Vertex destVertex;
+
+    public Edge(Vertex dest, int w){
+        this.destVertex = dest;
+        this.weight = w;
     }
 
-    // This function gives the count of edges
-    public void getEdgesCount(boolean bidirection)
-    {
-        int count = 0;
-        for (T v : map.keySet()) {
-            count += map.get(v).size();
-        }
-        if (bidirection == true) {
-            count = count / 2;
-        }
-        System.out.println("The graph has "
-                + count
-                + " edges.");
+    /* can use this approach for an unweighted graph
+        or better remove variable weight altogether from Edge class */
+    public Edge(Vertex dest){
+        this.destVertex = dest;
+        this.weight = 1;
     }
 
-    // This function gives whether
-    // a vertex is present or not.
-    public void hasVertex(T s)
-    {
-        if (map.containsKey(s)) {
-            System.out.println("The graph contains "
-                    + s + " as a vertex.");
-        }
-        else {
-            System.out.println("The graph does not contain "
-                    + s + " as a vertex.");
-        }
+    public int getWeight(){
+        return weight;
     }
 
-    // This function gives whether an edge is present or not.
-    public void hasEdge(T s, T d)
-    {
-        if (map.get(s).contains(d)) {
-            System.out.println("The graph has an edge between "
-                    + s + " and " + d + ".");
-        }
-        else {
-            System.out.println("The graph has no edge between "
-                    + s + " and " + d + ".");
-        }
+    public Vertex getDestVertex(){
+        return destVertex;
+    }
+}
+
+/**
+ * Graph implementation found on the following link:
+ * https://medium.com/@mithratalluri/basic-graph-implementation-in-java-9ed12e328c57
+ */
+class Graph{
+    private HashSet<Vertex> nodes;
+
+    public Graph(){
+        nodes = new HashSet<>();
     }
 
-    // Prints the adjancency list of each vertex.
-    @Override
-    public String toString()
-    {
-        StringBuilder builder = new StringBuilder();
+    public boolean AddEdge(Vertex v1, Vertex v2, int weight){
+        //since it's a directed graph
+        return v1.getEdges().add(new Edge(v2, weight));
+        /* If you want to implement an undirected graph,
+            add v2.getEdges().add(new Edge(v1, weight)) also */
+    }
 
-        for (T v : map.keySet()) {
-            builder.append(v.toString() + ": ");
-            for (T w : map.get(v)) {
-                builder.append(w.toString() + " ");
+    public boolean AddVertex(Vertex v){
+        return nodes.add(v);
+    }
+
+    public void printGraph(){
+        //I printed it like this. You can print it however you want though
+        for(Vertex v : nodes){
+            System.out.print("vertex name: "+ v.getName() + ": ");
+            for(Edge e : v.getEdges()){
+                System.out.print("destVertex: " + e.getDestVertex().getName() + " weight: " + e.getWeight() + " | ");
             }
-            builder.append("\n");
+            System.out.print("\n");
         }
-
-        return (builder.toString());
     }
 }
