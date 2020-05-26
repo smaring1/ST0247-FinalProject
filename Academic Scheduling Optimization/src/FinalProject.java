@@ -4,7 +4,14 @@ import java.util.LinkedList;
 class FinalProject {
     public static void main(String[] args) {
         //Implenemtar grafo para distncias entre bloques
-        System.out.println("Hola");
+        Graph map = new Graph();
+        Vertex v = new Vertex("nodo 1");
+        Vertex w = new Vertex("nodo 2");
+        map.AddVertex(v);
+        map.AddVertex(w);
+        map.AddEdge(v, w, 4);
+        map.printGraph();
+        //Llenar con la lectura de los datos
     }
 }
 
