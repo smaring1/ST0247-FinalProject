@@ -1,7 +1,14 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedList;
  // PRUEBA GIT PETRO
 class FinalProject {
+
+     public static final String SEPARATOR=";";
+     public static final String QUOTE="\"";
+
     public static void main(String[] args) {
         //Implenemtar grafo para distncias entre bloques
         Graph map = new Graph();
@@ -12,19 +19,102 @@ class FinalProject {
         map.AddEdge(v, w, 4);
         map.printGraph();
         //Llenar con la lectura de los datos
+        DataFillGroup();
     }
+
+
+    public static void DataFillGroup(){
+        BufferedReader br = null;
+        LinkedList<Group> group = new LinkedList<Group>();
+        int cont = 0;
+        try {
+            br =new BufferedReader(new FileReader("C:\\Users\\jrami\\OneDrive\\Documentos\\EAFIT\\GIT\\ST0247-FinalProject\\Academic Scheduling Optimization\\estudiante_curso_grupo.csv"));
+            String line = br.readLine();
+            while (null!=line) {
+                String [] fields = line.split(",");
+
+                fields = removeTrailingQuotes(fields);
+                System.out.println(Arrays.toString(fields));
+                Group g1;
+                group.addLast(g1 = new Group(fields[0],fields[1],fields[2],fields[3],fields[4],fields[5],fields[6]));
+
+                line = br.readLine();
+            }
+
+        } catch (Exception e) {
+
+        }
+    }
+
+     public static void DataFillEnrollment(){
+         BufferedReader br = null;
+         LinkedList<Enrollment> enroll = new LinkedList<Enrollment>();
+         int cont = 0;
+         try {
+             br =new BufferedReader(new FileReader("C:\\Users\\jrami\\OneDrive\\Documentos\\EAFIT\\GIT\\ST0247-FinalProject\\Academic Scheduling Optimization\\grupos_semestre.csv"));
+             String line = br.readLine();
+             while (null!=line) {
+                 String [] fields = line.split(",");
+
+                 fields = removeTrailingQuotes(fields);
+                 System.out.println(Arrays.toString(fields));
+                 Enrollment e1;
+                 enroll.addLast(e1 = new Enrollment(fields[0],fields[1],fields[2]));
+
+                 line = br.readLine();
+             }
+
+         } catch (Exception e) {
+
+         }
+     }
+
+     public static void DataFillClassroom(){
+         BufferedReader br = null;
+         LinkedList<Classroom> classrooms = new LinkedList<Classroom>();
+         int cont = 0;
+         try {
+             br =new BufferedReader(new FileReader("C:\\Users\\jrami\\OneDrive\\Documentos\\EAFIT\\GIT\\ST0247-FinalProject\\Academic Scheduling Optimization\\grupos_semestre.csv"));
+             String line = br.readLine();
+             while (null!=line) {
+                 String [] fields = line.split(",");
+
+                 fields = removeTrailingQuotes(fields);
+                 System.out.println(Arrays.toString(fields));
+                 Classroom c1;
+                 classrooms.addLast(c1 = new Classroom());
+
+                 line = br.readLine();
+             }
+
+         } catch (Exception e) {
+
+         }
+     }
+
+     private static String[] removeTrailingQuotes(String[] fields) {
+
+         String result[] = new String[fields.length];
+
+         for (int i=0;i<result.length;i++){
+             result[i] = fields[i].replaceAll("^"+QUOTE, "").replaceAll(QUOTE+"$", "");
+         }
+         return result;
+     }
+
 }
+
 
 class Group {
     String course;
     String group;
-    int professor;
+    String professor;
     String day;
-    int startTime; //TODO: Revisar cómo se mete este dato en int pues el dataset lo da como hh:mm
-    int endTime; //TODO: Lo mismo con este dato
+    String startTime; //TODO: Revisar cómo se mete este dato en int pues el dataset lo da como hh:mm
+    String endTime; //TODO: Lo mismo con este dato
     String classroom;
 
-    public Group(String course, String group, int professor, String day, int startTime, int endTime, String classroom) {
+    public Group(String course, String group, String professor, String classroom, String day, String startTime, String endTime) {
         this.course = course;
         this.group = group;
         this.professor = professor;
@@ -50,11 +140,11 @@ class Group {
         this.group = group;
     }
 
-    public int getProfessor() {
+    public String getProfessor() {
         return professor;
     }
 
-    public void setProfessor(int professor) {
+    public void setProfessor(String professor) {
         this.professor = professor;
     }
 
@@ -66,19 +156,19 @@ class Group {
         this.day = day;
     }
 
-    public int getStartTime() {
+    public String getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(int startTime) {
+    public void setStartTime(String startTime) {
         this.startTime = startTime;
     }
 
-    public int getEndTime() {
+    public String getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(int endTime) {
+    public void setEndTime(String endTime) {
         this.endTime = endTime;
     }
 
@@ -92,21 +182,21 @@ class Group {
 }
 
 class Enrollment {
-    int student;
+    String student;
     String course;
-    int group;
+    String group;
 
-    public Enrollment(int student, String course, int group) {
+    public Enrollment(String student, String course, String group) {
         this.student = student;
         this.course = course;
         this.group = group;
     }
 
-    public int getStudent() {
+    public String getStudent() {
         return student;
     }
 
-    public void setStudent(int student) {
+    public void setStudent(String student) {
         this.student = student;
     }
 
@@ -118,11 +208,11 @@ class Enrollment {
         this.course = course;
     }
 
-    public int getGroup() {
+    public String getGroup() {
         return group;
     }
 
-    public void setGroup(int group) {
+    public void setGroup(String group) {
         this.group = group;
     }
 }
@@ -133,43 +223,6 @@ class Classroom {
     int capacity;
     int access;
     //TODO: crear metodos Constructor, getters y setters
-}
-
-//TODO: Muy importante, meter las distancias en un grafo
-class Distance {
-    String block_1;
-    String block_2;
-    float distance;
-
-    public Distance(String block_1, String block_2, float distance) {
-        this.block_1 = block_1;
-        this.block_2 = block_2;
-        this.distance = distance;
-    }
-
-    public String getBlock_1() {
-        return block_1;
-    }
-
-    public void setBlock_1(String block_1) {
-        this.block_1 = block_1;
-    }
-
-    public String getBlock_2() {
-        return block_2;
-    }
-
-    public void setBlock_2(String block_2) {
-        this.block_2 = block_2;
-    }
-
-    public float getDistance() {
-        return distance;
-    }
-
-    public void setDistance(float distance) {
-        this.distance = distance;
-    }
 }
 
 class Vertex{
