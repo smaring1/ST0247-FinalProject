@@ -11,16 +11,14 @@ class FinalProject {
 
     LinkedList<Group> groups = dataFillGroup("estudiante_curso_grupo.csv");
     LinkedList<Enrollment> enrollments = dataFillEnrollment("grupos_semestre.csv");
-    LinkedList<Classroom> classrooms = dataFillClassroom("grupos_semestre.csv");
+    LinkedList<Classroom> classrooms = dataFillClassroom("aulas.csv");
+    LinkedList<StudenMI> MI = dataFIllStudentMI("estudiantes_discapacitados.csv");
 
     public static void main(String[] args) {
         //LLAMADOS A TODOS LOS FILL
         Graph map = dataFillMap("DistanciasBloques.csv");
         System.out.println("Map: ");
         map.printGraph();
-        //LinkedList<Group> groups = dataFillGroup("estudiante_curso_grupo.csv");
-        //LinkedList<Enrollment> enrollments = dataFillEnrollment("grupos_semestre.csv");
-        //LinkedList<Classroom> classrooms = dataFillClassroom("grupos_semestre.csv");
     }
 
 
@@ -72,7 +70,7 @@ class FinalProject {
         return enroll;
     }
 
-    // TODO: NO TOCAR TODAVIA
+    // LISTO
     public static LinkedList<Classroom> dataFillClassroom(String file){
         BufferedReader br = null;
         LinkedList<Classroom> classrooms = new LinkedList<Classroom>();
@@ -86,7 +84,7 @@ class FinalProject {
                 fields = removeTrailingQuotes(fields);
                 System.out.println(Arrays.toString(fields));
                 Classroom c1;
-                classrooms.addLast(c1 = new Classroom());
+                classrooms.addLast(c1 = new Classroom(fields[0],fields[1],Integer.parseInt(fields[2]),Integer.parseInt(fields[3])));
 
                 line = br.readLine();
             }
@@ -97,6 +95,29 @@ class FinalProject {
         return classrooms;
     }
 
+    public static LinkedList<StudenMI> dataFIllStudentMI(String file){
+        BufferedReader br = null;
+        LinkedList<StudenMI> MI = new LinkedList<StudenMI>();
+        int cont = 0;
+        try {
+            br =new BufferedReader(new FileReader(file));
+            String line = br.readLine();
+            while (null!=line) {
+                String [] fields = line.split(",");
+
+                fields = removeTrailingQuotes(fields);
+                System.out.println(Arrays.toString(fields));
+                StudenMI m1;
+                MI.addLast(m1 = new StudenMI(fields[0],Boolean.parseBoolean(fields[1])));
+
+                line = br.readLine();
+            }
+
+        } catch (Exception e) {
+
+        }
+        return MI;
+    }
     public static Graph dataFillMap(String file) {
         Graph map = new Graph();
         Vertex [] blocks = new Vertex[19];
@@ -153,7 +174,9 @@ class FinalProject {
         }
         return map;
     }
-    
+
+
+
     private static String[] removeTrailingQuotes(String[] fields) {
 
         String result[] = new String[fields.length];
@@ -280,12 +303,96 @@ class Enrollment {
 
 class Classroom {
     String classroomNum;
+    String type;
     //TODO: Completar los atributos (dudas con el tipo de aula)
     int capacity;
     int access;
     //TODO: crear metodos Constructor, getters y setters
+
+    public Classroom(String classroomNum, String type, int capacity, int access) {
+        this.classroomNum = classroomNum;
+        this.type = type;
+        this.capacity = capacity;
+        this.access = access;
+    }
+
+    public String getClassroomNum() {
+        return classroomNum;
+    }
+
+    public void setClassroomNum(String classroomNum) {
+        this.classroomNum = classroomNum;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public int getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
+    }
+
+    public int getAccess() {
+        return access;
+    }
+
+    public void setAccess(int access) {
+        this.access = access;
+    }
+
+    @Override
+    public String toString() {
+        return "Classroom{" +
+                "classroomNum='" + classroomNum + '\'' +
+                ", type='" + type + '\'' +
+                ", capacity=" + capacity +
+                ", access=" + access +
+                '}';
+    }
 }
 
+
+class StudenMI{
+    String Student_ID;
+    boolean MobilityImpairment;
+
+    public StudenMI(String student_ID, boolean mobilityImpairment) {
+        Student_ID = student_ID;
+        MobilityImpairment = mobilityImpairment;
+    }
+
+    public String getStudent_ID() {
+        return Student_ID;
+    }
+
+    public void setStudent_ID(String student_ID) {
+        Student_ID = student_ID;
+    }
+
+    public boolean isMobilityImpairment() {
+        return MobilityImpairment;
+    }
+
+    public void setMobilityImpairment(boolean mobilityImpairment) {
+        MobilityImpairment = mobilityImpairment;
+    }
+
+    @Override
+    public String toString() {
+        return "StudenMI{" +
+                "Student_ID='" + Student_ID + '\'' +
+                ", MobilityImpairment=" + MobilityImpairment +
+                '}';
+    }
+}
 class Vertex{
     private String name;
     private LinkedList<Edge> edgeList;
