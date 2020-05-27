@@ -1,9 +1,19 @@
 Idea de Simón: Coger laboratorios, aulas de música, etc que no se puedan mover, meterlos en una lista y sacarlos de la
 lista de aulas disponibles para cambiar, acomodar al grupo ahí y que esa posición sea fija.
 
+
 Idea de Simón: para los grupos en los cuales tenemos estudiantes con movilidad reducida, buscar el bloque más cercano, 
 que a su vez tenga accesibilidad para movilidad reducida, y que a su vez tenga salón con la capacidad y cupo disponible
-para acomodar al grupo en este salón. Nota: se me ocurre también que si en ese bloque hay salones digamos de 40 sillas
+para acomodar al grupo en este salón. 
+
+NOTA 1: se me ocurre también que si en ese bloque hay salones digamos de 40 sillas
 y de 20 sillas y tenemos un grupo de 20 estudiantes, buscar acomodarlo en el aula de menor capacidad a la que le 
 quepa el grupo, para aprovechar lo más posible los cupos en las aulas y así no ocupar aulas dejando puestos vacíos,
 por si se requiere que un grupo más grande sea acomodado en un aula grande.
+
+NOTA 2: se me ocurre hacer un método para acomodar cualquier grupo bajo la condición de ocupar los salones óptimamente, como
+mencioné. Al momento de ejecutar, donde primero debemos acomodar a los discapacitados, se me ocurre invocar el método de todos
+los grupos, pero con la condición extra de que si el grupo tiene estudiantes con problemas de movilidad, lo acomode en el
+aula en el bloque más cercano que tenga acceso para estudiantes con movilidad reducida. Así resolvemos lo de optimizar el
+uso del espacio y acomodamos al grupo que tiene al estudiante con problemas de movilidad. Ya después de eso, ejecutamos
+el método de acomodar grupos sin más condiciones y ya las cosas que se nos vayan presentando las vamos acomodando.
