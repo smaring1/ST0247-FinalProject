@@ -14,18 +14,18 @@ class FinalProject {
         Graph map = dataFillMap("DistanciasBloques.csv");
         System.out.println("Map: ");
         map.printGraph();
-        dataFillGroup();
-        dataFillEnrollment();
-        dataFillClassroom();
+        LinkedList<Group> groups = dataFillGroup("estudiante_curso_grupo.csv");
+        LinkedList<Enrollment> enrollments = dataFillEnrollment("grupos_semestre.csv");
+        LinkedList<Classroom> classrooms = dataFillClassroom("grupos_semestre.csv");
     }
 
 
-    public static void dataFillGroup(){
+    public static LinkedList<Group> dataFillGroup(String file){
         BufferedReader br = null;
         LinkedList<Group> group = new LinkedList<Group>();
         int cont = 0;
         try {
-            br =new BufferedReader(new FileReader("estudiante_curso_grupo.csv"));
+            br =new BufferedReader(new FileReader(file));
             String line = br.readLine();
             while (null!=line) {
                 String [] fields = line.split(",");
@@ -41,14 +41,15 @@ class FinalProject {
         } catch (Exception e) {
 
         }
+        return group;
     }
 
-    public static void dataFillEnrollment(){
+    public static LinkedList<Enrollment> dataFillEnrollment(String file){
         BufferedReader br = null;
         LinkedList<Enrollment> enroll = new LinkedList<Enrollment>();
         int cont = 0;
         try {
-            br =new BufferedReader(new FileReader("grupos_semestre.csv"));
+            br =new BufferedReader(new FileReader(file));
             String line = br.readLine();
             while (null!=line) {
                 String [] fields = line.split(",");
@@ -64,15 +65,16 @@ class FinalProject {
         } catch (Exception e) {
 
         }
+        return enroll;
     }
 
     // TODO: NO TOCAR TODAVIA
-    public static void dataFillClassroom(){
+    public static LinkedList<Classroom> dataFillClassroom(String file){
         BufferedReader br = null;
         LinkedList<Classroom> classrooms = new LinkedList<Classroom>();
         int cont = 0;
         try {
-            br =new BufferedReader(new FileReader("grupos_semestre.csv"));
+            br =new BufferedReader(new FileReader(file));
             String line = br.readLine();
             while (null!=line) {
                 String [] fields = line.split(",");
@@ -88,6 +90,7 @@ class FinalProject {
         } catch (Exception e) {
 
         }
+        return classrooms;
     }
 
     public static Graph dataFillMap(String file) {
@@ -156,7 +159,6 @@ class FinalProject {
         }
         return result;
     }
-
 }
 
 
