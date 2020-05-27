@@ -89,26 +89,26 @@ class FinalProject {
 
      public static Graph dataFillMap(String file) {
         Graph map = new Graph();
-        Vertex [] blocks = new Vertex[39];
-        blocks[1] = new Vertex("1");
-        blocks[7] = new Vertex("7");
-        blocks[13] = new Vertex("13");
-        blocks[14] = new Vertex("14");
-        blocks[15] = new Vertex("15");
-        blocks[16] = new Vertex("16");
-        blocks[17] = new Vertex("17");
-        blocks[18] = new Vertex("18");
-        blocks[19] = new Vertex("19");
-        blocks[23] = new Vertex("23");
-        blocks[26] = new Vertex("26");
-        blocks[27] = new Vertex("27");
-        blocks[29] = new Vertex("29");
-        blocks[30] = new Vertex("30");
-        blocks[31] = new Vertex("31");
-        blocks[33] = new Vertex("33");
-        blocks[34] = new Vertex("34");
-        blocks[35] = new Vertex("35");
-        blocks[38] = new Vertex("38");
+        Vertex [] blocks = new Vertex[19];
+        blocks[0] = new Vertex("1");
+        blocks[1] = new Vertex("7");
+        blocks[2] = new Vertex("13");
+        blocks[3] = new Vertex("14");
+        blocks[4] = new Vertex("15");
+        blocks[5] = new Vertex("16");
+        blocks[6] = new Vertex("17");
+        blocks[7] = new Vertex("18");
+        blocks[8] = new Vertex("19");
+        blocks[9] = new Vertex("23");
+        blocks[10] = new Vertex("26");
+        blocks[11] = new Vertex("27");
+        blocks[12] = new Vertex("29");
+        blocks[13] = new Vertex("30");
+        blocks[14] = new Vertex("31");
+        blocks[15] = new Vertex("33");
+        blocks[16] = new Vertex("34");
+        blocks[17] = new Vertex("35");
+        blocks[18] = new Vertex("38");
 
         BufferedReader br = null;
         int cont = 0;
@@ -119,9 +119,7 @@ class FinalProject {
 
             //Adding block vertexes to graph
             for (int i = 0; i < blocks.length; i++) {
-                if (blocks[i] != null) {
-                    map.AddVertex(blocks[i]);
-                }
+                map.AddVertex(blocks[i]);
             }
 
             //Adding distance weight values between block
