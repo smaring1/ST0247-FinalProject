@@ -1,7 +1,6 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 
@@ -15,14 +14,6 @@ class FinalProject {
         Graph map = dataFillMap("DistanciasBloques.csv");
         System.out.println("Map: ");
         map.printGraph();
-        Graph prueba = new Graph();
-        Vertex v = new Vertex("v");
-        Vertex w = new Vertex("w");
-        prueba.AddVertex(v);
-        prueba.AddVertex(w);
-        prueba.AddEdge(v, w, 2);
-        System.out.println("Prueba: ");
-        prueba.printGraph();
         dataFillGroup();
     }
 
