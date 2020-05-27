@@ -1,0 +1,2 @@
+Idea de Simón: Coger laboratorios, aulas de música, etc que no se puedan mover, meterlos en una lista y sacarlos de la
+lista de aulas disponibles para cambiar, acomodar al grupo ahí y que esa posición sea fija.
