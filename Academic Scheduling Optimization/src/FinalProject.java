@@ -1,3 +1,4 @@
+import javax.xml.transform.Source;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.Arrays;
@@ -255,7 +256,22 @@ class FinalProject {
         return result;
     }
 
-
+    /**
+     * This method changes the location for a group
+     * @param source the classroom in which a group is assigned.
+     * @param destination the classroom where the group will be moved.
+     * @return true if the change was succesfully done, false otherwise.
+     */
+    public boolean changeClassroom(String source, Source destination) {
+        return true; //TODO: Implementar este método
+        //La idea es usar este método por si queremos cambiar a un grupo de
+        //Salón, los parámetros serán dados finalmente al invocarse, pues
+        //El algoritmo determinará el salón origen del grupo a cambiar
+        //Y el destino a donde se debe mover y hacer los cambios en las
+        //Listas enlazadas a las que corresponde esta información.
+        //Es booleano para que si se logró cambiar retorne true, de lo
+        //contrario, retorna false.
+    }
 }
 
 /**
