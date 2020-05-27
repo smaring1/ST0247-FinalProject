@@ -23,7 +23,7 @@ class FinalProject {
         classrooms = dataFillClassroom("aulas.csv");
         MI = dataFIllStudentMI("estudiantes_discapacitados.csv");
         groupType = classType();
-      //  map.printGraph();
+        //map.printGraph();
     }
 
 
@@ -285,6 +285,31 @@ class Group {
 
     public String getClassroom() {
         return classroom;
+    }
+
+    /**
+     * This method returns the block in whick a classroom is
+     * @return block
+     */
+    public String getClassroomBlock() {
+        String b = classroom;
+        b = classroom.charAt(0) + classroom.charAt(1) + "";
+        if (b.startsWith("0")) {
+            return b.charAt(1) + "";
+        } else {
+            return b;
+        }
+    }
+
+    /**
+     * This method returns the classroom number from
+     * a clasroom id.
+     * @return classroom number
+     */
+    public String getClassroomNumber() {
+        String b = classroom;
+        b = b.substring(2);
+        return b;
     }
 
     public void setClassroom(String classroom) {
