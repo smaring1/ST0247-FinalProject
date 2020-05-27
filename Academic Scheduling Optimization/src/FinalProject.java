@@ -13,7 +13,16 @@ class FinalProject {
     public static void main(String[] args) {
         //Llenar con la lectura de los datos
         Graph map = dataFillMap("DistanciasBloques.csv");
+        System.out.println("Map: ");
         map.printGraph();
+        Graph prueba = new Graph();
+        Vertex v = new Vertex("v");
+        Vertex w = new Vertex("w");
+        prueba.AddVertex(v);
+        prueba.AddVertex(w);
+        prueba.AddEdge(v, w, 2);
+        System.out.println("Prueba: ");
+        prueba.printGraph();
         dataFillGroup();
     }
 
@@ -126,7 +135,7 @@ class FinalProject {
             while (null != line) {
                 String [] fields = line.split(",");
                 fields = removeTrailingQuotes(fields);
-                System.out.println(Arrays.toString(fields));
+                //System.out.println(Arrays.toString(fields));
                 for (Vertex v: map.nodes) {
                     for (Vertex w: map.nodes) {
                         if ((v.getName() == fields[0] && w.getName() == fields[1]) ||
@@ -334,6 +343,7 @@ class Graph{
 
     public boolean AddEdge(Vertex v1, Vertex v2, int weight){
         //since it's a directed graph
+        v2.getEdges().add(new Edge(v1, weight));
         return v1.getEdges().add(new Edge(v2, weight));
         /* If you want to implement an undirected graph,
             add v2.getEdges().add(new Edge(v1, weight)) also */
