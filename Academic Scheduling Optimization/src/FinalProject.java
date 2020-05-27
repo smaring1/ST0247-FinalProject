@@ -10,11 +10,13 @@ class FinalProject {
     public static final String QUOTE="\"";
 
     public static void main(String[] args) {
-        //Llenar con la lectura de los datos
+        //LLAMADOS A TODOS LOS FILL
         Graph map = dataFillMap("DistanciasBloques.csv");
         System.out.println("Map: ");
         map.printGraph();
         dataFillGroup();
+        dataFillEnrollment();
+        dataFillClassroom();
     }
 
 
@@ -144,15 +146,7 @@ class FinalProject {
         }
         return map;
     }
-
-
-    public static void bloques(){
-
-    }
-
-    public static void camino(){
-
-    }
+    
     private static String[] removeTrailingQuotes(String[] fields) {
 
         String result[] = new String[fields.length];
