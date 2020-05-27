@@ -9,14 +9,18 @@ class FinalProject {
     public static final String SEPARATOR=";";
     public static final String QUOTE="\"";
 
+    LinkedList<Group> groups = dataFillGroup("estudiante_curso_grupo.csv");
+    LinkedList<Enrollment> enrollments = dataFillEnrollment("grupos_semestre.csv");
+    LinkedList<Classroom> classrooms = dataFillClassroom("grupos_semestre.csv");
+
     public static void main(String[] args) {
         //LLAMADOS A TODOS LOS FILL
         Graph map = dataFillMap("DistanciasBloques.csv");
         System.out.println("Map: ");
         map.printGraph();
-        LinkedList<Group> groups = dataFillGroup("estudiante_curso_grupo.csv");
-        LinkedList<Enrollment> enrollments = dataFillEnrollment("grupos_semestre.csv");
-        LinkedList<Classroom> classrooms = dataFillClassroom("grupos_semestre.csv");
+        //LinkedList<Group> groups = dataFillGroup("estudiante_curso_grupo.csv");
+        //LinkedList<Enrollment> enrollments = dataFillEnrollment("grupos_semestre.csv");
+        //LinkedList<Classroom> classrooms = dataFillClassroom("grupos_semestre.csv");
     }
 
 
