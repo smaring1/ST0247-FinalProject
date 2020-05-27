@@ -9,16 +9,21 @@ class FinalProject {
     public static final String SEPARATOR=";";
     public static final String QUOTE="\"";
 
-    LinkedList<Group> groups = dataFillGroup("estudiante_curso_grupo.csv");
-    LinkedList<Enrollment> enrollments = dataFillEnrollment("grupos_semestre.csv");
-    LinkedList<Classroom> classrooms = dataFillClassroom("aulas.csv");
-    LinkedList<StudenMI> MI = dataFIllStudentMI("estudiantes_discapacitados.csv");
+    static LinkedList<Group> groups = new LinkedList<Group>();
+    static LinkedList<Enrollment> enrollments =new LinkedList<Enrollment>();
+    static LinkedList<Classroom> classrooms =new LinkedList<Classroom>();
+    static LinkedList<StudenMI> MI = new LinkedList<StudenMI>();
+    static LinkedList<groupTypeClass> groupType = new LinkedList<groupTypeClass>();
 
     public static void main(String[] args) {
         //LLAMADOS A TODOS LOS FILL
         Graph map = dataFillMap("DistanciasBloques.csv");
-        System.out.println("Map: ");
-        map.printGraph();
+        groups = dataFillGroup("grupos_semestre.csv");
+        enrollments = dataFillEnrollment("estudiante_curso_grupo.csv");
+        classrooms = dataFillClassroom("aulas.csv");
+        MI = dataFIllStudentMI("estudiantes_discapacitados.csv");
+        groupType = classType();
+      //  map.printGraph();
     }
 
 
@@ -31,17 +36,18 @@ class FinalProject {
             String line = br.readLine();
             while (null!=line) {
                 String [] fields = line.split(",");
-
                 fields = removeTrailingQuotes(fields);
-                System.out.println(Arrays.toString(fields));
-                Group g1;
-                group.addLast(g1 = new Group(fields[0],fields[1],fields[2],fields[3],fields[4],fields[5],fields[6]));
 
+                // Limpieza de datos innecesarios
+                if(!fields[6].equals("00000")) {
+                  //  System.out.println(Arrays.toString(fields));
+                    group.addLast(new Group(fields[0], fields[1], fields[2], fields[3], fields[4], fields[5], fields[6]));
+                }
                 line = br.readLine();
             }
 
         } catch (Exception e) {
-
+            System.out.println("ERROR "+e);
         }
         return group;
     }
@@ -57,15 +63,14 @@ class FinalProject {
                 String [] fields = line.split(",");
 
                 fields = removeTrailingQuotes(fields);
-                System.out.println(Arrays.toString(fields));
-                Enrollment e1;
-                enroll.addLast(e1 = new Enrollment(fields[0],fields[1],fields[2]));
+
+                enroll.addLast(new Enrollment(fields[0],fields[1],fields[2]));
 
                 line = br.readLine();
             }
 
         } catch (Exception e) {
-
+            System.out.println("ERROR "+e);
         }
         return enroll;
     }
@@ -82,15 +87,18 @@ class FinalProject {
                 String [] fields = line.split(",");
 
                 fields = removeTrailingQuotes(fields);
-                System.out.println(Arrays.toString(fields));
-                Classroom c1;
-                classrooms.addLast(c1 = new Classroom(fields[0],fields[1],Integer.parseInt(fields[2]),Integer.parseInt(fields[3])));
+                // System.out.println(Arrays.toString(fields));
+                if(fields[2].equals("N/A")){
+                    classrooms.addLast(new Classroom(fields[0],fields[1],0,Integer.parseInt(fields[3])));
+                }else{
+                    classrooms.addLast(new Classroom(fields[0],fields[1],Integer.parseInt(fields[2]),Integer.parseInt(fields[3])));
+                }
 
                 line = br.readLine();
             }
 
         } catch (Exception e) {
-
+            System.out.println("Eche no joda mano "+e);
         }
         return classrooms;
     }
@@ -106,15 +114,15 @@ class FinalProject {
                 String [] fields = line.split(",");
 
                 fields = removeTrailingQuotes(fields);
-                System.out.println(Arrays.toString(fields));
-                StudenMI m1;
-                MI.addLast(m1 = new StudenMI(fields[0],Boolean.parseBoolean(fields[1])));
+
+
+                MI.addLast(new StudenMI(fields[0],Boolean.parseBoolean(fields[1])));
 
                 line = br.readLine();
             }
 
         } catch (Exception e) {
-
+            System.out.println("ERROR "+e);
         }
         return MI;
     }
@@ -170,10 +178,27 @@ class FinalProject {
             }
 
         } catch (Exception e) {
-
+            System.out.println("ERROR "+e);
         }
         return map;
     }
+
+
+    public static LinkedList<groupTypeClass> classType(){
+        LinkedList<groupTypeClass> groupType1 = new LinkedList<groupTypeClass>();
+
+        for (int i = 0; i < groups.size(); i++) {
+            for (int j = 0; j < classrooms.size(); j++) {
+                if(groups.get(i).getClassroom().equals(classrooms.get(j).getClassroomNum())){
+                    groupType1.addLast(new groupTypeClass(groups.get(i).getClassroom(),classrooms.get(j).getType()));
+                    System.out.println("SALON: "+groups.get(i).getClassroom()+" = "+classrooms.get(j).getType());
+                }
+            }
+        }
+        return groupType1;
+    }
+
+
 
 
 
@@ -186,6 +211,8 @@ class FinalProject {
         }
         return result;
     }
+
+
 }
 
 
@@ -198,7 +225,7 @@ class Group {
     String endTime; //TODO: Lo mismo con este dato
     String classroom;
 
-    public Group(String course, String group, String professor, String classroom, String day, String startTime, String endTime) {
+    public Group(String course, String group, String professor, String day, String startTime, String endTime, String classroom) {
         this.course = course;
         this.group = group;
         this.professor = professor;
@@ -393,6 +420,42 @@ class StudenMI{
                 '}';
     }
 }
+
+
+class groupTypeClass{
+    String classroom;
+    String type;
+
+    public groupTypeClass(String classroom, String type) {
+        this.classroom = classroom;
+        this.type = type;
+    }
+
+    public String getClassroom() {
+        return classroom;
+    }
+
+    public void setClassroom(String classroom) {
+        this.classroom = classroom;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    @Override
+    public String toString() {
+        return "groupTypeClass{" +
+                "classroom='" + classroom + '\'' +
+                ", type='" + type + '\'' +
+                '}';
+    }
+}
+
 class Vertex{
     private String name;
     private LinkedList<Edge> edgeList;
