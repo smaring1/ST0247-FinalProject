@@ -4,6 +4,12 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedList;
 
+/**
+ * This program solves the final proyect
+ * for Data Structures and Algoritms II course
+ * @author Simón Marín Giraldo
+ * @author Julián Ramírez Giraldo
+ */
 class FinalProject {
 
     public static final String SEPARATOR=";";
@@ -26,7 +32,13 @@ class FinalProject {
         //map.printGraph();
     }
 
-
+    /**
+     * This method fills a Group Linked List with
+     * the dataset given.
+     * @param file
+     * @return a Linked List with the data ready
+     * to be manipulated
+     */
     public static LinkedList<Group> dataFillGroup(String file){
         BufferedReader br = null;
         LinkedList<Group> group = new LinkedList<Group>();
@@ -52,6 +64,13 @@ class FinalProject {
         return group;
     }
 
+    /**
+     * This method fills an Enrollment Linked List with
+     * the dataset given.
+     * @param file
+     * @return a Linked List with the data ready
+     * to be manipulated
+     */
     public static LinkedList<Enrollment> dataFillEnrollment(String file){
         BufferedReader br = null;
         LinkedList<Enrollment> enroll = new LinkedList<Enrollment>();
@@ -75,7 +94,13 @@ class FinalProject {
         return enroll;
     }
 
-    // LISTO
+    /**
+     * This method fills a Classroom Linked List with
+     * the dataset given.
+     * @param file
+     * @return a Linked List with the data ready
+     * to be manipulated
+     */
     public static LinkedList<Classroom> dataFillClassroom(String file){
         BufferedReader br = null;
         LinkedList<Classroom> classrooms = new LinkedList<Classroom>();
@@ -103,6 +128,13 @@ class FinalProject {
         return classrooms;
     }
 
+    /**
+     * This method fills a Reduced Movility Students
+     * Linked List with the given dataset.
+     * @param file
+     * @return a Linked List with the data ready
+     * to be manipulated
+     */
     public static LinkedList<StudenMI> dataFIllStudentMI(String file){
         BufferedReader br = null;
         LinkedList<StudenMI> MI = new LinkedList<StudenMI>();
@@ -126,6 +158,15 @@ class FinalProject {
         }
         return MI;
     }
+
+    /**
+     * This method fills a weighted and undirected Graph
+     * representing the blocks in the university and
+     * the distances between them.
+     * @param file
+     * @return a weighted and undirected Graph with the data ready
+     * to be manipulated
+     */
     public static Graph dataFillMap(String file) {
         Graph map = new Graph();
         Vertex [] blocks = new Vertex[19];
@@ -198,10 +239,12 @@ class FinalProject {
         return groupType1;
     }
 
-
-
-
-
+    /**
+     * This method removes the unnecessary quotation
+     * marks in data lines.
+     * @param fields
+     * @return
+     */
     private static String[] removeTrailingQuotes(String[] fields) {
 
         String result[] = new String[fields.length];
@@ -215,7 +258,10 @@ class FinalProject {
 
 }
 
-
+/**
+ * This data type defines a group
+ * for a class in the university.
+ */
 class Group {
     String course;
     String group;
@@ -317,6 +363,11 @@ class Group {
     }
 }
 
+/**
+ * This data type defines the
+ * enrollment of students in a
+ * course at the university
+ */
 class Enrollment {
     String student;
     String course;
