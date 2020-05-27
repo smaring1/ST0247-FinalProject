@@ -7,8 +7,8 @@ import java.util.LinkedList;
 
 class FinalProject {
 
-     public static final String SEPARATOR=";";
-     public static final String QUOTE="\"";
+    public static final String SEPARATOR=";";
+    public static final String QUOTE="\"";
 
     public static void main(String[] args) {
         //Llenar con la lectura de los datos
@@ -50,53 +50,53 @@ class FinalProject {
         }
     }
 
-     public static void dataFillEnrollment(){
-         BufferedReader br = null;
-         LinkedList<Enrollment> enroll = new LinkedList<Enrollment>();
-         int cont = 0;
-         try {
-             br =new BufferedReader(new FileReader("grupos_semestre.csv"));
-             String line = br.readLine();
-             while (null!=line) {
-                 String [] fields = line.split(",");
+    public static void dataFillEnrollment(){
+        BufferedReader br = null;
+        LinkedList<Enrollment> enroll = new LinkedList<Enrollment>();
+        int cont = 0;
+        try {
+            br =new BufferedReader(new FileReader("grupos_semestre.csv"));
+            String line = br.readLine();
+            while (null!=line) {
+                String [] fields = line.split(",");
 
-                 fields = removeTrailingQuotes(fields);
-                 System.out.println(Arrays.toString(fields));
-                 Enrollment e1;
-                 enroll.addLast(e1 = new Enrollment(fields[0],fields[1],fields[2]));
+                fields = removeTrailingQuotes(fields);
+                System.out.println(Arrays.toString(fields));
+                Enrollment e1;
+                enroll.addLast(e1 = new Enrollment(fields[0],fields[1],fields[2]));
 
-                 line = br.readLine();
-             }
+                line = br.readLine();
+            }
 
-         } catch (Exception e) {
+        } catch (Exception e) {
 
-         }
-     }
+        }
+    }
 
-     public static void dataFillClassroom(){
-         BufferedReader br = null;
-         LinkedList<Classroom> classrooms = new LinkedList<Classroom>();
-         int cont = 0;
-         try {
-             br =new BufferedReader(new FileReader("grupos_semestre.csv"));
-             String line = br.readLine();
-             while (null!=line) {
-                 String [] fields = line.split(",");
+    public static void dataFillClassroom(){
+        BufferedReader br = null;
+        LinkedList<Classroom> classrooms = new LinkedList<Classroom>();
+        int cont = 0;
+        try {
+            br =new BufferedReader(new FileReader("grupos_semestre.csv"));
+            String line = br.readLine();
+            while (null!=line) {
+                String [] fields = line.split(",");
 
-                 fields = removeTrailingQuotes(fields);
-                 System.out.println(Arrays.toString(fields));
-                 Classroom c1;
-                 classrooms.addLast(c1 = new Classroom());
+                fields = removeTrailingQuotes(fields);
+                System.out.println(Arrays.toString(fields));
+                Classroom c1;
+                classrooms.addLast(c1 = new Classroom());
 
-                 line = br.readLine();
-             }
+                line = br.readLine();
+            }
 
-         } catch (Exception e) {
+        } catch (Exception e) {
 
-         }
-     }
+        }
+    }
 
-     public static Graph dataFillMap(String file) {
+    public static Graph dataFillMap(String file) {
         Graph map = new Graph();
         Vertex [] blocks = new Vertex[19];
         blocks[0] = new Vertex("1");
@@ -120,7 +120,6 @@ class FinalProject {
         blocks[18] = new Vertex("38");
 
         BufferedReader br = null;
-        int cont = 0;
 
         try {
             br = new BufferedReader(new FileReader(file));
@@ -138,8 +137,8 @@ class FinalProject {
                 //System.out.println(Arrays.toString(fields));
                 for (Vertex v: map.nodes) {
                     for (Vertex w: map.nodes) {
-                        if ((v.getName() == fields[0] && w.getName() == fields[1]) ||
-                                (v.getName() == fields[1] && w.getName() == fields[0])) {
+                        if ((v.getName().equals(fields[0]) && w.getName().equals(fields[1])) ||
+                                (v.getName().equals(fields[1]) && w.getName().equals(fields[0]))) {
                             map.AddEdge(v, w, Integer.parseInt(fields[2]));
                         }
                     }
@@ -152,17 +151,25 @@ class FinalProject {
 
         }
         return map;
-     }
+    }
 
-     private static String[] removeTrailingQuotes(String[] fields) {
 
-         String result[] = new String[fields.length];
+    public static void bloques(){
 
-         for (int i=0;i<result.length;i++){
-             result[i] = fields[i].replaceAll("^"+QUOTE, "").replaceAll(QUOTE+"$", "");
-         }
-         return result;
-     }
+    }
+
+    public static void camino(){
+
+    }
+    private static String[] removeTrailingQuotes(String[] fields) {
+
+        String result[] = new String[fields.length];
+
+        for (int i=0;i<result.length;i++){
+            result[i] = fields[i].replaceAll("^"+QUOTE, "").replaceAll(QUOTE+"$", "");
+        }
+        return result;
+    }
 
 }
 
