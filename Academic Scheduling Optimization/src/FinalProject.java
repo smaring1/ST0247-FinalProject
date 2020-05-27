@@ -1,3 +1,4 @@
+import javax.swing.*;
 import javax.xml.transform.Source;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -272,6 +273,10 @@ class FinalProject {
         //Es booleano para que si se logró cambiar retorne true, de lo
         //contrario, retorna false.
     }
+
+    //TODO: crear un método que dado un curso, si este tiene estudiantes
+    //con problemas de movilidad, los trastee para el bloque más cercano con un salón disponible
+    //que a la vez tenga accesibilidad para sillas de ruedas
 }
 
 /**
