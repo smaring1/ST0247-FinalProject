@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 
@@ -10,16 +11,9 @@ class FinalProject {
      public static final String QUOTE="\"";
 
     public static void main(String[] args) {
-        //Implenemtar grafo para distncias entre bloques
-        Graph prueba = new Graph();
-        Vertex v = new Vertex("nodo 1");
-        Vertex w = new Vertex("nodo 2");
-        prueba.AddVertex(v);
-        prueba.AddVertex(w);
-        prueba.AddEdge(v, w, 4);
-        prueba.printGraph();
         //Llenar con la lectura de los datos
         Graph map = dataFillMap("DistanciasBloques.csv");
+        map.printGraph();
         dataFillGroup();
     }
 
@@ -95,18 +89,58 @@ class FinalProject {
 
      public static Graph dataFillMap(String file) {
         Graph map = new Graph();
+        Vertex [] blocks = new Vertex[39];
+        blocks[1] = new Vertex("1");
+        blocks[7] = new Vertex("7");
+        blocks[13] = new Vertex("13");
+        blocks[14] = new Vertex("14");
+        blocks[15] = new Vertex("15");
+        blocks[16] = new Vertex("16");
+        blocks[17] = new Vertex("17");
+        blocks[18] = new Vertex("18");
+        blocks[19] = new Vertex("19");
+        blocks[23] = new Vertex("23");
+        blocks[26] = new Vertex("26");
+        blocks[27] = new Vertex("27");
+        blocks[29] = new Vertex("29");
+        blocks[30] = new Vertex("30");
+        blocks[31] = new Vertex("31");
+        blocks[33] = new Vertex("33");
+        blocks[34] = new Vertex("34");
+        blocks[35] = new Vertex("35");
+        blocks[38] = new Vertex("38");
+
         BufferedReader br = null;
         int cont = 0;
+
         try {
             br = new BufferedReader(new FileReader(file));
             String line = br.readLine();
+
+            //Adding block vertexes to graph
+            for (int i = 0; i < blocks.length; i++) {
+                if (blocks[i] != null) {
+                    map.AddVertex(blocks[i]);
+                }
+            }
+
+            //Adding distance weight values between block
             while (null != line) {
                 String [] fields = line.split(",");
                 fields = removeTrailingQuotes(fields);
                 System.out.println(Arrays.toString(fields));
-                //TODO: Llenar primero con los vertices y despues con los pesos
+                for (Vertex v: map.nodes) {
+                    for (Vertex w: map.nodes) {
+                        if ((v.getName() == fields[0] && w.getName() == fields[1]) ||
+                                (v.getName() == fields[1] && w.getName() == fields[0])) {
+                            map.AddEdge(v, w, Integer.parseInt(fields[2]));
+                        }
+                    }
+                }
+
                 line = br.readLine();
             }
+
         } catch (Exception e) {
 
         }
@@ -294,7 +328,7 @@ class Edge{
  * https://medium.com/@mithratalluri/basic-graph-implementation-in-java-9ed12e328c57
  */
 class Graph{
-    private HashSet<Vertex> nodes;
+    public HashSet<Vertex> nodes;
 
     public Graph(){
         nodes = new HashSet<>();
@@ -320,5 +354,14 @@ class Graph{
             }
             System.out.print("\n");
         }
+    }
+
+    public boolean contains(Vertex v) {
+        for (Vertex w: nodes) {
+            if (v.getName().equals(w.getName())) {
+                return true;
+            }
+        }
+        return false;
     }
 }
