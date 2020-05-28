@@ -566,7 +566,7 @@ class Vertex{
      * This method finds the nearest block
      * that also has access for people with
      * mobility issues
-     * @return a Vertex in the graph whick
+     * @return a Vertex in the graph which
      * represents the block
      */
     public Vertex nearestAccessibleBlock() {
