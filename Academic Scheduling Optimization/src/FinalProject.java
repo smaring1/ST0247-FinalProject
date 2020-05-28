@@ -1,8 +1,6 @@
-import javax.swing.*;
 import javax.xml.transform.Source;
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedList;
 
@@ -32,7 +30,8 @@ class FinalProject {
         MI = dataFIllStudentMI("estudiantes_discapacitados.csv");
         groupType = classType();
         //map.printGraph();
-
+        double walkingDistance = avgWalkingDistance(map, classrooms, enrollments, groups);
+        System.out.println("Without optimization, the average walking distance is: " + walkingDistance);
     }
 
     /**
@@ -109,7 +108,7 @@ class FinalProject {
         LinkedList<Classroom> classrooms = new LinkedList<Classroom>();
         int cont = 0;
         try {
-            br =new BufferedReader(new FileReader(file));
+            br = new BufferedReader(new FileReader(file));
             String line = br.readLine();
             while (null!=line) {
                 String [] fields = line.split(",");
@@ -126,7 +125,7 @@ class FinalProject {
             }
 
         } catch (Exception e) {
-            System.out.println("Eche no joda mano "+e);
+
         }
         return classrooms;
     }
@@ -256,6 +255,11 @@ class FinalProject {
             result[i] = fields[i].replaceAll("^"+QUOTE, "").replaceAll(QUOTE+"$", "");
         }
         return result;
+    }
+
+    public static double avgWalkingDistance(Graph map, LinkedList<Classroom> classrooms, LinkedList<Enrollment> enrollments, LinkedList<Group> groups) {
+        //TODO: Implementar este método para mostrar la comparación antes y después de mover a la gente
+        return 0;
     }
 
     /**
@@ -429,10 +433,8 @@ class Enrollment {
 class Classroom {
     String classroomNum;
     String type;
-    //TODO: Completar los atributos (dudas con el tipo de aula)
     int capacity;
     int access;
-    //TODO: crear metodos Constructor, getters y setters
 
     public Classroom(String classroomNum, String type, int capacity, int access) {
         this.classroomNum = classroomNum;
