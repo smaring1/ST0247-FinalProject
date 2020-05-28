@@ -20,6 +20,7 @@ class FinalProject {
     static LinkedList<Classroom> classrooms =new LinkedList<Classroom>();
     static LinkedList<StudenMI> MI = new LinkedList<StudenMI>();
     static LinkedList<groupTypeClass> groupType = new LinkedList<groupTypeClass>();
+    static LinkedList<String> unnecesary = new LinkedList<String>();
 
     public static void main(String[] args) {
         //LLAMADOS A TODOS LOS FILL
@@ -32,8 +33,21 @@ class FinalProject {
         //map.printGraph();
         double walkingDistance = avgWalkingDistance(map, classrooms, enrollments, groups);
         System.out.println("Without optimization, the average walking distance is: " + walkingDistance);
+        pruebaEstudianteHorario(map);
     }
 
+
+
+    public static void pruebaEstudianteHorario(Graph map){
+        String aux = "MU0315";
+        horarioEstudiante(aux);
+    }
+
+    public static void horarioEstudiante(String student){
+        for(int i = 0; i<groups.size();i++){
+               // System.out.println(" " + groups.get(i).getCourse() + " " + groups.get(i).getStartTime() + " " + groups.get(i).getEndTime());
+        }
+    }
     /**
      * This method fills a Group Linked List with
      * the dataset given.
@@ -53,8 +67,9 @@ class FinalProject {
                 fields = removeTrailingQuotes(fields);
 
                 // Limpieza de datos innecesarios
-                if(!fields[6].equals("00000")) {
+               if(!fields[6].equals("00000")) {
                   //  System.out.println(Arrays.toString(fields));
+                  unnecesary.addLast(fields[0]);
                     group.addLast(new Group(fields[0], fields[1], fields[2], fields[3], fields[4], fields[5], fields[6]));
                 }
                 line = br.readLine();
@@ -234,7 +249,6 @@ class FinalProject {
             for (int j = 0; j < classrooms.size(); j++) {
                 if(groups.get(i).getClassroom().equals(classrooms.get(j).getClassroomNum())){
                     groupType1.addLast(new groupTypeClass(groups.get(i).getClassroom(),classrooms.get(j).getType()));
-                    System.out.println("SALON: "+groups.get(i).getClassroom()+" = "+classrooms.get(j).getType());
                 }
             }
         }
@@ -365,7 +379,7 @@ class Group {
      */
     public String getClassroomBlock() {
         String b = classroom;
-        b = classroom.charAt(0) + classroom.charAt(1) + "";
+        b = classroom.substring(0,2);
         if (b.startsWith("0")) {
             return b.charAt(1) + "";
         } else {
@@ -453,7 +467,7 @@ class Classroom {
      */
     public String getClassroomBlock() {
         String b = classroomNum;
-        b = classroomNum.charAt(0) + classroomNum.charAt(1) + "";
+        b = classroomNum.substring(0,2);
         if (b.startsWith("0")) {
             return b.charAt(1) + "";
         } else {
