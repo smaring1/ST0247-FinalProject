@@ -21,6 +21,7 @@ class FinalProject {
     static LinkedList<StudenMI> MI = new LinkedList<StudenMI>();
     static LinkedList<groupTypeClass> groupType = new LinkedList<groupTypeClass>();
     static LinkedList<String> unnecesary = new LinkedList<String>();
+    static LinkedList<Student> studentCourseGroup = new LinkedList<Student>();
 
     public static void main(String[] args) {
         //LLAMADOS A TODOS LOS FILL
@@ -36,6 +37,35 @@ class FinalProject {
         pruebaEstudianteHorario(map);
     }
 
+    public static LinkedList<CourseGroup> fillCourseGroup(String id){
+        LinkedList<CourseGroup> Bocanegra = new LinkedList<CourseGroup>();
+        String student_id = id;
+
+    }
+
+    public static LinkedList<Student> dataFillStudent(String file){
+
+        LinkedList<Student> Franco_Armani = new LinkedList<Student>();
+        BufferedReader br = null;
+
+        try {
+            br =new BufferedReader(new FileReader(file));
+            String line = br.readLine();
+            while (null!=line) {
+                String [] fields = line.split(",");
+                fields = removeTrailingQuotes(fields);
+
+                Franco_Armani.addLast(new Student());
+
+                line = br.readLine();
+            }
+
+        } catch (Exception e) {
+            System.out.println("ERROR "+e);
+        }
+        return Franco_Armani;
+
+    }
 
 
     public static void pruebaEstudianteHorario(Graph map){
@@ -297,6 +327,63 @@ class FinalProject {
     //con problemas de movilidad, los trastee para el bloque más cercano con un salón disponible
     //que a la vez tenga accesibilidad para sillas de ruedas
 }
+
+
+class Student{
+
+    String ID;
+    LinkedList<CourseGroup> Vladimir_Hernandez = new LinkedList<CourseGroup>();
+
+    public Student(String ID, LinkedList<CourseGroup> vladimir_Hernandez) {
+        this.ID = ID;
+        Vladimir_Hernandez = vladimir_Hernandez;
+    }
+
+    public String getID() {
+        return ID;
+    }
+
+    public void setID(String ID) {
+        this.ID = ID;
+    }
+
+    public LinkedList<CourseGroup> getVladimir_Hernandez() {
+        return Vladimir_Hernandez;
+    }
+
+    public void setVladimir_Hernandez(LinkedList<CourseGroup> vladimir_Hernandez) {
+        Vladimir_Hernandez = vladimir_Hernandez;
+    }
+}
+
+class CourseGroup{
+    String course;
+    String group;
+
+    public CourseGroup(String course, String group) {
+        this.course = course;
+        this.group = group;
+    }
+
+    public String getCourse() {
+        return course;
+    }
+
+    public void setCourse(String course) {
+        this.course = course;
+    }
+
+    public String getGroup() {
+        return group;
+    }
+
+    public void setGroup(String group) {
+        this.group = group;
+    }
+
+
+}
+
 
 /**
  * This data type defines a group
