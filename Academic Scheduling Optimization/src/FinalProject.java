@@ -619,7 +619,7 @@ class Vertex{
      */
     private boolean isAccessible(LinkedList<Classroom> classrooms) {
         for (Classroom c: classrooms) {
-            if (this.name == c.getClassroomBlock() && c.access == 0) {
+            if (this.name.equals(c.getClassroomBlock()) && c.access == 0) {
                 return true;
             }
         }
