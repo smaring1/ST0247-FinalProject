@@ -102,8 +102,8 @@
 13404,Laboratorio,25,0
 13405,Aula de clase,35,0
 14102,Laboratorio de Geologia fisica y fotointerpretacion,32,1
-"14103,""Laboratorio de geologia/paleontologia/petroleos y rocas sedimentarias"",25,1"
-"14305,""Laboratorio de Manejo de Materiales o Fábrica/laboratorio de Aprendizaje en Ensamble y Manejo de Materiales/espacio para implementar metodologías prácticas novedosas para la enseñanza de las asignaturas en las áreas de Logística y Manufactura."",25,0"
+14103,Laboratorio de geologia/paleontologia/petroleos y rocas sedimentarias,25,1
+14305,Laboratorio de Manejo de Materiales o Fábrica/laboratorio de Aprendizaje en Ensamble y Manejo de Materiales/espacio para implementar metodologías prácticas novedosas para la enseñanza de las asignaturas en las áreas de Logística y Manufactura,25,0
 14306,Laboratorio de Fabrica de aprendizaje,N/A,0
 14405,Aula de clase,25,0
 14406,Aula de clase,25,0
@@ -165,7 +165,7 @@
 19206,Laboratorio control digital,18,1
 19217,Laboratorio electrotecnia,12,1
 19301,Laboratorio materiales,10,1
-"19304,""Laboratorio de suelos/concretos y pavimentos"",10,1"
+19304,Laboratorio de suelos/concretos y pavimentos,10,1
 19413,Sala de reuniones,6,1
 19414,Aula de pedagogia inversa,80,1
 19415,Aula de pedagogia inversa,80,1
@@ -258,8 +258,8 @@
 29406,Sala de reuniones,8,1
 29504,Sala de reuniones,8,1
 29521,Aula de clase Desarrollo estudiantil,15,1
-03124,Sala de reuniones,2,1
-03304,Sala de reuniones,8,0
+3124,Sala de reuniones,2,1
+3304,Sala de reuniones,8,0
 30103,Cubiculo de musica con instrumento,1,1
 30104,Cubiculo de musica con instrumento,1,1
 30105,Cubiculo de musica con instrumento,1,1
@@ -270,7 +270,7 @@
 30114,Aula de Musica con instrumento,2,1
 30115,Auditorio,70,1
 30116,Aula de Musica con instrumento,2,1
-30117,,1,1
+30117,Aula de Musica con instrumento,1,1
 30118,Cubiculo de musica con instrumento,1,1
 30201,Aula de Musica con instrumento,15,1
 30202,Aula de Musica con instrumento,15,1
@@ -371,11 +371,11 @@
 38320,Sala de computo,30,1
 38321,Sala de computo,30,1
 38405,Aula Humanidades,26,1
-07101,Aula de clase,28,1
-07102,Aula de clase,28,1
-07103,Aula de clase,28,1
-07104,Aula de clase,28,1
-07105,Aula de clase,28,1
-07106,Aula de clase,28,1
-07107,Aula de clase,28,1
-07108,Aula de clase,28,1
+7101,Aula de clase,28,1
+7102,Aula de clase,28,1
+7103,Aula de clase,28,1
+7104,Aula de clase,28,1
+7105,Aula de clase,28,1
+7106,Aula de clase,28,1
+7107,Aula de clase,28,1
+7108,Aula de clase,28,1

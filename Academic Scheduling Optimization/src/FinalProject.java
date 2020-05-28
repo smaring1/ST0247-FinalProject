@@ -32,6 +32,7 @@ class FinalProject {
         MI = dataFIllStudentMI("estudiantes_discapacitados.csv");
         groupType = classType();
         //map.printGraph();
+
     }
 
     /**
@@ -444,6 +445,31 @@ class Classroom {
         return classroomNum;
     }
 
+    /**
+     * This method returns the block in whick a classroom is
+     * @return block
+     */
+    public String getClassroomBlock() {
+        String b = classroomNum;
+        b = classroomNum.charAt(0) + classroomNum.charAt(1) + "";
+        if (b.startsWith("0")) {
+            return b.charAt(1) + "";
+        } else {
+            return b;
+        }
+    }
+
+    /**
+     * This method returns the classroom number from
+     * a clasroom id.
+     * @return classroom number
+     */
+    public String getClassroomNumber() {
+        String b = classroomNum;
+        b = b.substring(2);
+        return b;
+    }
+
     public void setClassroomNum(String classroomNum) {
         this.classroomNum = classroomNum;
     }
@@ -554,12 +580,16 @@ class groupTypeClass{
 }
 
 class Vertex{
-    private String name;
-    private LinkedList<Edge> edgeList;
+    public String name;
+    public LinkedList<Edge> edgeList;
 
     public Vertex(String name){
         this.name = name;
         edgeList = new LinkedList<>();
+    }
+
+    public LinkedList<Edge> getEdgeList() {
+        return edgeList;
     }
 
     /**
@@ -569,11 +599,11 @@ class Vertex{
      * @return a Vertex in the graph which
      * represents the block
      */
-    public Vertex nearestAccessibleBlock() {
+    public Vertex nearestAccessibleBlock(LinkedList<Classroom> classrooms) {
         LinkedList<Edge> edges = this.edgeList;
         Edge minValue = edges.peekFirst();
         for (int i = 1; i < edges.size(); i++) {
-            if (edges.get(i).weight < minValue.weight && edges.get(i).destVertex.isAccessible()) {
+            if (edges.get(i).weight < minValue.weight && edges.get(i).destVertex.isAccessible(classrooms)) {
                 minValue = edges.get(i);
             }
         }
@@ -583,11 +613,17 @@ class Vertex{
     /**
      * This method determines if a certain
      * block has access for people with
-     * mobility problems.
+     * mobility problems
+     * @param classrooms the classroom list
      * @return true if it has, false otherwise.
      */
-    private boolean isAccessible() { //TODO: Implementar un método que determine si un bloque tiene accesibilidad para movilidad reducida
-        return true;
+    private boolean isAccessible(LinkedList<Classroom> classrooms) {
+        for (Classroom c: classrooms) {
+            if (this.name == c.getClassroomBlock() && c.access == 0) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public String getName(){
@@ -633,6 +669,10 @@ class Graph{
 
     public Graph(){
         nodes = new HashSet<>();
+    }
+
+    public HashSet<Vertex> getNodes() {
+        return nodes;
     }
 
     public boolean AddEdge(Vertex v1, Vertex v2, int weight){
