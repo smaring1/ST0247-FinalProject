@@ -562,6 +562,34 @@ class Vertex{
         edgeList = new LinkedList<>();
     }
 
+    /**
+     * This method finds the nearest block
+     * that also has access for people with
+     * mobility issues
+     * @return a Vertex in the graph whick
+     * represents the block
+     */
+    public Vertex nearestAccessibleBlock() {
+        LinkedList<Edge> edges = this.edgeList;
+        Edge minValue = edges.peekFirst();
+        for (int i = 1; i < edges.size(); i++) {
+            if (edges.get(i).weight < minValue.weight && edges.get(i).destVertex.isAccessible()) {
+                minValue = edges.get(i);
+            }
+        }
+        return minValue.destVertex;
+    }
+
+    /**
+     * This method determines if a certain
+     * block has access for people with
+     * mobility problems.
+     * @return true if it has, false otherwise.
+     */
+    private boolean isAccessible() { //TODO: Implementar un método que determine si un bloque tiene accesibilidad para movilidad reducida
+        return true;
+    }
+
     public String getName(){
         return name;
     }
@@ -572,8 +600,8 @@ class Vertex{
 }
 
 class Edge{
-    private int weight;
-    private Vertex destVertex;
+    public int weight;
+    public Vertex destVertex;
 
     public Edge(Vertex dest, int w){
         this.destVertex = dest;
