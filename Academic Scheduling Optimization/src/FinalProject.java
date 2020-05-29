@@ -40,22 +40,23 @@ class FinalProject {
     public static LinkedList<CourseGroup> fillCourseGroup(String id){
         LinkedList<CourseGroup> Bocanegra = new LinkedList<CourseGroup>();
         String student_id = id;
-
+        //Implementar
+        return Bocanegra;
     }
 
     public static LinkedList<Student> dataFillStudent(String file){
 
-        LinkedList<Student> Franco_Armani = new LinkedList<Student>();
+        LinkedList<Student> students = new LinkedList<Student>();
         BufferedReader br = null;
 
         try {
-            br =new BufferedReader(new FileReader(file));
+            br = new BufferedReader(new FileReader(file));
             String line = br.readLine();
             while (null!=line) {
                 String [] fields = line.split(",");
                 fields = removeTrailingQuotes(fields);
 
-                Franco_Armani.addLast(new Student());
+                //Franco_Armani.addLast(new Student(fillCourseGroup()));
 
                 line = br.readLine();
             }
@@ -63,7 +64,7 @@ class FinalProject {
         } catch (Exception e) {
             System.out.println("ERROR "+e);
         }
-        return Franco_Armani;
+        return students;
 
     }
 
@@ -332,11 +333,11 @@ class FinalProject {
 class Student{
 
     String ID;
-    LinkedList<CourseGroup> Vladimir_Hernandez = new LinkedList<CourseGroup>();
+    LinkedList<CourseGroup> classes = new LinkedList<CourseGroup>();
 
-    public Student(String ID, LinkedList<CourseGroup> vladimir_Hernandez) {
+    public Student(String ID, LinkedList<CourseGroup> classesList) {
         this.ID = ID;
-        Vladimir_Hernandez = vladimir_Hernandez;
+        classes = classesList;
     }
 
     public String getID() {
@@ -347,12 +348,12 @@ class Student{
         this.ID = ID;
     }
 
-    public LinkedList<CourseGroup> getVladimir_Hernandez() {
-        return Vladimir_Hernandez;
+    public LinkedList<CourseGroup> getClasses() {
+        return classes;
     }
 
-    public void setVladimir_Hernandez(LinkedList<CourseGroup> vladimir_Hernandez) {
-        Vladimir_Hernandez = vladimir_Hernandez;
+    public void setClasses(LinkedList<CourseGroup> classes) {
+        this.classes = classes;
     }
 }
 
