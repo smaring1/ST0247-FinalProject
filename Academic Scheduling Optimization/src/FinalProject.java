@@ -24,6 +24,7 @@ class FinalProject {
     static LinkedList<Student> studentCourseGroup = new LinkedList<Student>();
 
     public static void main(String[] args) {
+        long startTime = System.currentTimeMillis();
         //LLAMADOS A TODOS LOS FILL
         Graph map = dataFillMap("DistanciasBloques.csv");
         groups = dataFillGroup("grupos_semestre.csv");
@@ -36,6 +37,12 @@ class FinalProject {
         double walkingDistance = avgWalkingDistance(map, classrooms, enrollments, groups);
         System.out.println("Without optimization, the average walking distance is: " + walkingDistance);
         pruebaEstudianteHorario(map);
+        long endTime = System.currentTimeMillis();
+        long totalExecTime = endTime - startTime;
+        System.out.println("Total execution time: " + totalExecTime + " miliseconds");
+        System.out.println("Total memory usage: ");
+        System.out.println("KB: " + (double) (Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / 1024);
+        System.out.println("MB: " + (double) ((Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / 1024)/1024);
     }
 
 
@@ -43,7 +50,7 @@ class FinalProject {
     public static LinkedList<Student> dataFillStudent(String file){
 
         LinkedList<Student> students = new LinkedList<Student>();
-        LinkedList<CourseGroup> Bocanegra = new LinkedList<CourseGroup>();
+        LinkedList<CourseGroup> auxiliar = new LinkedList<CourseGroup>();
         String flag = "1";
         BufferedReader br = null;
 
@@ -55,12 +62,12 @@ class FinalProject {
                 fields = removeTrailingQuotes(fields);
 
                 if(fields[0].equals(flag)){
-                    Bocanegra.addLast(new CourseGroup(fields[1],fields[2]));
+                    auxiliar.addLast(new CourseGroup(fields[1],fields[2]));
                 }else{
-                    System.out.println("Guardado: "+flag);
-                    students.addLast(new Student(flag,Bocanegra));
+                    //System.out.println("Guardado: "+flag);
+                    students.addLast(new Student(flag, auxiliar));
                     flag = fields[0];
-                    Bocanegra.clear();
+                    auxiliar.clear();
                 }
 
                 line = br.readLine();
