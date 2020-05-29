@@ -30,6 +30,7 @@ class FinalProject {
         enrollments = dataFillEnrollment("estudiante_curso_grupo.csv");
         classrooms = dataFillClassroom("aulas.csv");
         MI = dataFIllStudentMI("estudiantes_discapacitados.csv");
+        studentCourseGroup = dataFillStudent("estudiante_curso_grupo.csv");
         groupType = classType();
         //map.printGraph();
         double walkingDistance = avgWalkingDistance(map, classrooms, enrollments, groups);
@@ -37,16 +38,13 @@ class FinalProject {
         pruebaEstudianteHorario(map);
     }
 
-    public static LinkedList<CourseGroup> fillCourseGroup(String id){
-        LinkedList<CourseGroup> Bocanegra = new LinkedList<CourseGroup>();
-        String student_id = id;
-        //Implementar
-        return Bocanegra;
-    }
+
 
     public static LinkedList<Student> dataFillStudent(String file){
 
         LinkedList<Student> students = new LinkedList<Student>();
+        LinkedList<CourseGroup> Bocanegra = new LinkedList<CourseGroup>();
+        String flag = "1";
         BufferedReader br = null;
 
         try {
@@ -56,7 +54,14 @@ class FinalProject {
                 String [] fields = line.split(",");
                 fields = removeTrailingQuotes(fields);
 
-                //Franco_Armani.addLast(new Student(fillCourseGroup()));
+                if(fields[0].equals(flag)){
+                    Bocanegra.addLast(new CourseGroup(fields[1],fields[2]));
+                }else{
+                    System.out.println("Guardado: "+flag);
+                    students.addLast(new Student(flag,Bocanegra));
+                    flag = fields[0];
+                    Bocanegra.clear();
+                }
 
                 line = br.readLine();
             }
