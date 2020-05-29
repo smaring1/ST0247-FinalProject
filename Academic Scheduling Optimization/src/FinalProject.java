@@ -12,11 +12,11 @@ import java.util.LinkedList;
  */
 class FinalProject {
 
+    // DECLARACION DE VARIABLES GLOBALES
     public static final String SEPARATOR=";";
     public static final String QUOTE="\"";
 
     static LinkedList<Group> groups = new LinkedList<Group>();
-    static LinkedList<Enrollment> enrollments =new LinkedList<Enrollment>();
     static LinkedList<Classroom> classrooms =new LinkedList<Classroom>();
     static LinkedList<StudenMI> MI = new LinkedList<StudenMI>();
     static LinkedList<groupTypeClass> groupType = new LinkedList<groupTypeClass>();
@@ -24,28 +24,34 @@ class FinalProject {
     static LinkedList<Student> studentCourseGroup = new LinkedList<Student>();
 
     public static void main(String[] args) {
-        long startTime = System.currentTimeMillis();
-        //LLAMADOS A TODOS LOS FILL
+
+        long startTime = System.currentTimeMillis(); // TIEMPO
+
         Graph map = dataFillMap("DistanciasBloques.csv");
         groups = dataFillGroup("grupos_semestre.csv");
-        enrollments = dataFillEnrollment("estudiante_curso_grupo.csv");
-        classrooms = dataFillClassroom("aulas.csv");
+        classrooms = dataFillClassroom("aulas.csv");             // LLAMADO A TODOS LOS FILL
         MI = dataFIllStudentMI("estudiantes_discapacitados.csv");
         studentCourseGroup = dataFillStudent("estudiante_curso_grupo.csv");
+
+        // OTROS
         groupType = classType();
         //map.printGraph();
-        double walkingDistance = avgWalkingDistance(map, classrooms, enrollments, groups);
-        System.out.println("Without optimization, the average walking distance is: " + walkingDistance);
-        pruebaEstudianteHorario(map);
+        pruebaEstudianteHorario();
         long endTime = System.currentTimeMillis();
-        long totalExecTime = endTime - startTime;
+        long totalExecTime = endTime - startTime; // TIEMPO
         System.out.println("Total execution time: " + totalExecTime + " miliseconds");
         System.out.println("Total memory usage: ");
         System.out.println("KB: " + (double) (Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / 1024);
         System.out.println("MB: " + (double) ((Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / 1024)/1024);
     }
 
-
+    /**
+     * This method fills an Enrollment Linked List with
+     * the dataset given.
+     * @param file
+     * @return a Linked List with the data ready
+     * to be manipulated
+     */
 
     public static LinkedList<Student> dataFillStudent(String file){
 
@@ -64,11 +70,11 @@ class FinalProject {
                 if(fields[0].equals(flag)){
                     auxiliar.addLast(new CourseGroup(fields[1],fields[2]));
                 }else{
-                    //System.out.println("Guardado: "+flag);
                     students.addLast(new Student(flag, auxiliar));
+                    System.out.println(students.get(1).getClasses());
                     flag = fields[0];
-                    auxiliar.clear();
                 }
+                auxiliar.clear();
 
                 line = br.readLine();
             }
@@ -81,16 +87,9 @@ class FinalProject {
     }
 
 
-    public static void pruebaEstudianteHorario(Graph map){
-        String aux = "MU0315";
-        horarioEstudiante(aux);
+    public static void pruebaEstudianteHorario(){
     }
 
-    public static void horarioEstudiante(String student){
-        for(int i = 0; i<groups.size();i++){
-               // System.out.println(" " + groups.get(i).getCourse() + " " + groups.get(i).getStartTime() + " " + groups.get(i).getEndTime());
-        }
-    }
     /**
      * This method fills a Group Linked List with
      * the dataset given.
@@ -124,35 +123,7 @@ class FinalProject {
         return group;
     }
 
-    /**
-     * This method fills an Enrollment Linked List with
-     * the dataset given.
-     * @param file
-     * @return a Linked List with the data ready
-     * to be manipulated
-     */
-    public static LinkedList<Enrollment> dataFillEnrollment(String file){
-        BufferedReader br = null;
-        LinkedList<Enrollment> enroll = new LinkedList<Enrollment>();
-        int cont = 0;
-        try {
-            br =new BufferedReader(new FileReader(file));
-            String line = br.readLine();
-            while (null!=line) {
-                String [] fields = line.split(",");
 
-                fields = removeTrailingQuotes(fields);
-
-                enroll.addLast(new Enrollment(fields[0],fields[1],fields[2]));
-
-                line = br.readLine();
-            }
-
-        } catch (Exception e) {
-            System.out.println("ERROR "+e);
-        }
-        return enroll;
-    }
 
     /**
      * This method fills a Classroom Linked List with
@@ -314,10 +285,7 @@ class FinalProject {
         return result;
     }
 
-    public static double avgWalkingDistance(Graph map, LinkedList<Classroom> classrooms, LinkedList<Enrollment> enrollments, LinkedList<Group> groups) {
-        //TODO: Implementar este método para mostrar la comparación antes y después de mover a la gente
-        return 0;
-    }
+
 
     /**
      * This method changes the location for a group
@@ -367,6 +335,14 @@ class Student{
     public void setClasses(LinkedList<CourseGroup> classes) {
         this.classes = classes;
     }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "ID='" + ID + '\'' +
+                ", classes=" + classes +
+                '}';
+    }
 }
 
 class CourseGroup{
@@ -394,7 +370,13 @@ class CourseGroup{
         this.group = group;
     }
 
-
+    @Override
+    public String toString() {
+        return "CourseGroup{" +
+                "course='" + course + '\'' +
+                ", group='" + group + '\'' +
+                '}';
+    }
 }
 
 
@@ -503,46 +485,7 @@ class Group {
     }
 }
 
-/**
- * This data type defines the
- * enrollment of students in a
- * course at the university
- */
-class Enrollment {
-    String student;
-    String course;
-    String group;
 
-    public Enrollment(String student, String course, String group) {
-        this.student = student;
-        this.course = course;
-        this.group = group;
-    }
-
-    public String getStudent() {
-        return student;
-    }
-
-    public void setStudent(String student) {
-        this.student = student;
-    }
-
-    public String getCourse() {
-        return course;
-    }
-
-    public void setCourse(String course) {
-        this.course = course;
-    }
-
-    public String getGroup() {
-        return group;
-    }
-
-    public void setGroup(String group) {
-        this.group = group;
-    }
-}
 
 class Classroom {
     String classroomNum;
