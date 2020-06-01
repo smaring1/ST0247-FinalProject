@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 
 /**
- * This program solves the final proyect
+ * This program solves the final project
  * for Data Structures and Algoritms II course
  * @author Simón Marín Giraldo
  * @author Julián Ramírez Giraldo
