@@ -76,7 +76,6 @@ class FinalProject {
                 }else{
                     students.addLast(new Student(flag, auxiliar));
                     flag = fields[0];
-                    auxiliar.clear();
                 }
 
             }
