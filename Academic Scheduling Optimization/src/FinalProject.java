@@ -59,35 +59,38 @@ class FinalProject {
         LinkedList<CourseGroup> auxiliar = new LinkedList<CourseGroup>();
         String flag = "1";
         BufferedReader br = null;
+        int i = 0;
 
         try {
+
             br = new BufferedReader(new FileReader(file));
             String line = br.readLine();
             while (null!=line) {
+
                 String [] fields = line.split(",");
                 fields = removeTrailingQuotes(fields);
 
                 if(fields[0].equals(flag)){
                     auxiliar.addLast(new CourseGroup(fields[1],fields[2]));
+                    line = br.readLine();
                 }else{
                     students.addLast(new Student(flag, auxiliar));
-                    System.out.println(students.get(1).getClasses());
                     flag = fields[0];
+                    auxiliar.clear();
                 }
-                auxiliar.clear();
 
-                line = br.readLine();
             }
 
         } catch (Exception e) {
             System.out.println("ERROR "+e);
         }
         return students;
-
     }
 
 
+
     public static void pruebaEstudianteHorario(){
+        System.out.println(studentCourseGroup.get(0));
     }
 
     /**
