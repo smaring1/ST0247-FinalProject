@@ -31,8 +31,8 @@ class FinalProject {
         groups = dataFillGroup("grupos_semestre.csv");
         classrooms = dataFillClassroom("aulas.csv");             // LLAMADO A TODOS LOS FILL
         MI = dataFIllStudentMI("estudiantes_discapacitados.csv");
+       // studentCourseGroup = dataFillStudent("estudiante_curso_grupo.csv");
         studentCourseGroup = dataFillStudent("estudiante_curso_grupo.csv");
-
         // OTROS
         groupType = classType();
         //map.printGraph();
@@ -57,6 +57,8 @@ class FinalProject {
 
         LinkedList<Student> students = new LinkedList<Student>();
         LinkedList<CourseGroup> auxiliar = new LinkedList<CourseGroup>();
+        LinkedList sec_list = new LinkedList();
+
         String flag = "1";
         BufferedReader br = null;
         int i = 0;
@@ -72,13 +74,18 @@ class FinalProject {
 
                 if(fields[0].equals(flag)){
                     auxiliar.addLast(new CourseGroup(fields[1],fields[2]));
+                    sec_list = (LinkedList) auxiliar.clone() ;
                     line = br.readLine();
                 }else{
-                    students.addLast(new Student(flag, auxiliar));
+                    students.addLast(new Student(flag, sec_list));
                     flag = fields[0];
+
+                    auxiliar.clear();
+
                 }
 
             }
+
 
         } catch (Exception e) {
             System.out.println("ERROR "+e);
@@ -89,7 +96,7 @@ class FinalProject {
 
 
     public static void pruebaEstudianteHorario(){
-        System.out.println(studentCourseGroup.get(0));
+      System.out.println(studentCourseGroup.get(1));
     }
 
     /**
