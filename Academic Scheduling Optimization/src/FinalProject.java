@@ -1,6 +1,7 @@
 import javax.xml.transform.Source;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 
@@ -22,7 +23,7 @@ class FinalProject {
     static LinkedList<groupTypeClass> groupType = new LinkedList<groupTypeClass>();
     static LinkedList<String> unnecesary = new LinkedList<String>();
     static LinkedList<Student> studentCourseGroup = new LinkedList<Student>();
-
+    static LinkedList<Edge> aux = new LinkedList<Edge>();
     public static void main(String[] args) {
 
         long startTime = System.currentTimeMillis(); // TIEMPO
@@ -35,7 +36,7 @@ class FinalProject {
         studentCourseGroup = dataFillStudent("estudiante_curso_grupo.csv");
         // OTROS
         groupType = classType();
-        //map.printGraph();
+       // map.printGraph();
         pruebaEstudianteHorario();
         long endTime = System.currentTimeMillis();
         long totalExecTime = endTime - startTime; // TIEMPO
@@ -43,6 +44,27 @@ class FinalProject {
         System.out.println("Total memory usage: ");
         System.out.println("KB: " + (double) (Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / 1024);
         System.out.println("MB: " + (double) ((Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / 1024)/1024);
+
+
+        for (Vertex x: map.getNodes()) {
+            aux = x.getEdges();
+        }
+
+        System.out.println(getDistance("19","38",map));
+    }
+
+    public static int getDistance(String a, String b, Graph map){
+
+        LinkedList<Edge> edges = aux;
+        int weight=0;
+        for (Edge e: aux) {
+            for (Vertex x: map.getNodes()) {
+                if(e.destVertex.getName().equals(b) && x.getName().equals(a)){
+                    weight = e.weight;
+                }
+            }
+        }
+        return weight;
     }
 
     /**
@@ -96,7 +118,8 @@ class FinalProject {
 
 
     public static void pruebaEstudianteHorario(){
-      System.out.println(studentCourseGroup.get(1));
+      // 19 - 38
+
     }
 
     /**
@@ -231,7 +254,6 @@ class FinalProject {
         blocks[18] = new Vertex("38");
 
         BufferedReader br = null;
-
         try {
             br = new BufferedReader(new FileReader(file));
             String line = br.readLine();
@@ -651,6 +673,7 @@ class Vertex{
     public String name;
     public LinkedList<Edge> edgeList;
 
+
     public Vertex(String name){
         this.name = name;
         edgeList = new LinkedList<>();
@@ -659,6 +682,7 @@ class Vertex{
     public LinkedList<Edge> getEdgeList() {
         return edgeList;
     }
+
 
     /**
      * This method finds the nearest block
@@ -673,6 +697,7 @@ class Vertex{
         for (int i = 1; i < edges.size(); i++) {
             if (edges.get(i).weight < minValue.weight && edges.get(i).destVertex.isAccessible(classrooms)) {
                 minValue = edges.get(i);
+
             }
         }
         return minValue.destVertex;
@@ -707,6 +732,7 @@ class Edge{
     public int weight;
     public Vertex destVertex;
 
+
     public Edge(Vertex dest, int w){
         this.destVertex = dest;
         this.weight = w;
@@ -739,9 +765,7 @@ class Graph{
         nodes = new HashSet<>();
     }
 
-    public HashSet<Vertex> getNodes() {
-        return nodes;
-    }
+    public HashSet<Vertex> getNodes() { return nodes; }
 
     public boolean AddEdge(Vertex v1, Vertex v2, int weight){
         //since it's a directed graph
