@@ -24,7 +24,8 @@ class FinalProject {
     static LinkedList<String> unnecesary = new LinkedList<String>();
     static LinkedList<Student> studentCourseGroup = new LinkedList<Student>();
     static LinkedList<Edge> aux = new LinkedList<Edge>();
-    static LinkedList<String> specialClassrooms = new LinkedList<String>();
+    static LinkedList<specialGroupClass> specialClassrooms = new LinkedList<specialGroupClass>();
+
 
     public static void main(String[] args) {
 
@@ -64,7 +65,7 @@ class FinalProject {
                 if(g.getClassroom()==t.getClassroom()){
                     Matcher mat = pat.matcher(t.getType());
                     if(mat.matches()){
-                        specialClassrooms.addLast(g.getCourse());
+                        specialClassrooms.addLast(new specialGroupClass(g.getCourse(),g.getClassroomNumber()));
                     }
                 }
             }
@@ -433,6 +434,31 @@ class CourseGroup{
     }
 }
 
+class specialGroupClass{
+    String course;
+    String classroom;
+
+    public specialGroupClass(String course, String classroom) {
+        this.course = course;
+        this.classroom = classroom;
+    }
+
+    public String getCourse() {
+        return course;
+    }
+
+    public void setCourse(String course) {
+        this.course = course;
+    }
+
+    public String getClassroom() {
+        return classroom;
+    }
+
+    public void setClassroom(String classroom) {
+        this.classroom = classroom;
+    }
+}
 
 /**
  * This data type defines a group
