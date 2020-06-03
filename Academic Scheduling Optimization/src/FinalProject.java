@@ -1,7 +1,7 @@
 import javax.xml.transform.Source;
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.util.HashMap;
+import java.util.regex.*;
 import java.util.HashSet;
 import java.util.LinkedList;
 
@@ -24,6 +24,8 @@ class FinalProject {
     static LinkedList<String> unnecesary = new LinkedList<String>();
     static LinkedList<Student> studentCourseGroup = new LinkedList<Student>();
     static LinkedList<Edge> aux = new LinkedList<Edge>();
+    static LinkedList<String> specialClassrooms = new LinkedList<String>();
+
     public static void main(String[] args) {
 
         long startTime = System.currentTimeMillis(); // TIEMPO
@@ -34,6 +36,7 @@ class FinalProject {
         MI = dataFIllStudentMI("estudiantes_discapacitados.csv");
        // studentCourseGroup = dataFillStudent("estudiante_curso_grupo.csv");
         studentCourseGroup = dataFillStudent("estudiante_curso_grupo.csv");
+        specialClassroomsFill();
         // OTROS
         groupType = classType();
        // map.printGraph();
@@ -45,15 +48,33 @@ class FinalProject {
         System.out.println("KB: " + (double) (Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / 1024);
         System.out.println("MB: " + (double) ((Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / 1024)/1024);
 
-
         for (Vertex x: map.getNodes()) {
             aux = x.getEdges();
         }
 
-        System.out.println(getDistance("19","38",map));
+        //System.out.println(getDistance("19","27",map));
+
     }
 
+    public static void specialClassroomsFill(){
+        String flag;
+        Pattern pat = Pattern.compile("^Laboratorio.*|^Cabina.*");
+        for(Group g: groups){
+            for(groupTypeClass t: groupType){
+                if(g.getClassroom()==t.getClassroom()){
+                    Matcher mat = pat.matcher(t.getType());
+                    if(mat.matches()){
+                        specialClassrooms.addLast(g.getCourse());
+                    }
+                }
+            }
+        }
+
+    }
+
+
     public static int getDistance(String a, String b, Graph map){
+
 
         LinkedList<Edge> edges = aux;
         int weight=0;
@@ -339,6 +360,8 @@ class FinalProject {
     //con problemas de movilidad, los trastee para el bloque más cercano con un salón disponible
     //que a la vez tenga accesibilidad para sillas de ruedas
 }
+
+
 
 
 class Student{
