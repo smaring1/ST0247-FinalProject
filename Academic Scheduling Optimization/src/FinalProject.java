@@ -25,7 +25,7 @@ class FinalProject {
     static LinkedList<Student> studentCourseGroup = new LinkedList<Student>();
     static LinkedList<Edge> aux = new LinkedList<Edge>();
     static LinkedList<specialGroupClass> specialClassrooms = new LinkedList<specialGroupClass>();
-
+    static LinkedList<Group> groupsStudentsS = new LinkedList<Group>();
 
     public static void main(String[] args) {
 
@@ -37,7 +37,6 @@ class FinalProject {
         MI = dataFIllStudentMI("estudiantes_discapacitados.csv");
        // studentCourseGroup = dataFillStudent("estudiante_curso_grupo.csv");
         studentCourseGroup = dataFillStudent("estudiante_curso_grupo.csv");
-        specialClassroomsFill();
         // OTROS
         groupType = classType();
        // map.printGraph();
@@ -51,10 +50,26 @@ class FinalProject {
 
         for (Vertex x: map.getNodes()) {
             aux = x.getEdges();
+            break;
         }
 
+        specialClassroomsFill();
+        studentGroupsSpecials();
         //System.out.println(getDistance("19","27",map));
 
+    }
+    
+
+
+    public static void studentGroupsSpecials(){
+        for(Group g: groups){
+            for(specialGroupClass s: specialClassrooms){
+                if(g.getClassroom()==s.getClassroom()){
+                    groupsStudentsS.addLast(g);
+                    groups.remove(g);
+                }
+            }
+        }
     }
 
     public static void specialClassroomsFill(){
@@ -66,6 +81,7 @@ class FinalProject {
                     Matcher mat = pat.matcher(t.getType());
                     if(mat.matches()){
                         specialClassrooms.addLast(new specialGroupClass(g.getCourse(),g.getClassroomNumber()));
+                        System.out.println(specialClassrooms.size());
                     }
                 }
             }
@@ -346,24 +362,36 @@ class FinalProject {
      * @param destination the classroom where the group will be moved.
      * @return true if the change was succesfully done, false otherwise.
      */
-    public boolean changeClassroom(String source, Source destination) {
-        return true; //TODO: Implementar este método
-        //La idea es usar este método por si queremos cambiar a un grupo de
-        //Salón, los parámetros serán dados finalmente al invocarse, pues
-        //El algoritmo determinará el salón origen del grupo a cambiar
-        //Y el destino a donde se debe mover y hacer los cambios en las
-        //Listas enlazadas a las que corresponde esta información.
-        //Es booleano para que si se logró cambiar retorne true, de lo
-        //contrario, retorna false.
-    }
 
-    //TODO: crear un método que dado un curso, si este tiene estudiantes
-    //con problemas de movilidad, los trastee para el bloque más cercano con un salón disponible
-    //que a la vez tenga accesibilidad para sillas de ruedas
 }
 
 
+class studendPGroups{
+    String ID;
+    LinkedList<Group> groups = new LinkedList<Group>();
 
+    public studendPGroups(String ID, LinkedList<Group> groups) {
+        this.ID = ID;
+        this.groups = groups;
+    }
+
+    public String getID() {
+        return ID;
+    }
+
+    public void setID(String ID) {
+        this.ID = ID;
+    }
+
+    public LinkedList<Group> getGroups() {
+        return groups;
+    }
+
+    public void setGroups(LinkedList<Group> groups) {
+        this.groups = groups;
+    }
+
+}
 
 class Student{
 
