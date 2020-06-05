@@ -1,6 +1,6 @@
-import javax.xml.transform.Source;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.util.Arrays;
 import java.util.regex.*;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -26,7 +26,7 @@ class FinalProject {
     static LinkedList<Edge> aux = new LinkedList<Edge>();
     static LinkedList<specialGroupClass> specialClassrooms = new LinkedList<specialGroupClass>();
     static LinkedList<Group> groupsStudentsS = new LinkedList<Group>();
-    static LinkedList<Class> studentLists = new LinkedList<Class>();
+    static LinkedList<Schedule> schedule = new LinkedList<Schedule>();
 
     public static void main(String[] args) {
 
@@ -56,13 +56,70 @@ class FinalProject {
 
         specialClassroomsFill();
         studentGroupsSpecials();
-        studentLists = fillGroupsList(studentCourseGroup, MI);
-        //System.out.println(getDistance("19","27",map));
-
-
+        scheduleFill();
+        System.out.println(schedule.size());
+        //for (int i = 0; i < schedule.size(); i++) {
+          //  System.out.println(schedule.get(i));
+        //}
     }
     
 
+    public static void scheduleFill(){
+        LinkedList<Schedule> cgaux = new LinkedList<>();
+        LinkedList sec_list = new LinkedList();
+        LinkedList<hours> [] schedulea = new LinkedList[7];
+        LinkedList<hours> [] scaux = new LinkedList[7];
+
+        for(int i = 0; i<100;i++){
+            for(int j = 0; j < studentCourseGroup.get(i).getClasses().size();j++){
+                for(Group g: groups){
+                    if(studentCourseGroup.get(i).getClasses().get(j).getCourse().equals(g.getCourse())){
+                      //  cgaux.addLast(new CourseGroup(g.getCourse(),g.getGroup()));
+                        switch (g.getDay()){
+                            case "lunes":
+                                schedulea[0] = new LinkedList<hours>();
+                                schedulea[0].addLast(new hours(new CourseGroup(g.getCourse(),g.getGroup()),g.getStartTime(),g.getEndTime()));
+                                break;
+                            case "martes":
+                                schedulea[1] = new LinkedList<hours>();
+                                schedulea[1].addLast(new hours(new CourseGroup(g.getCourse(),g.getGroup()),g.getStartTime(),g.getEndTime()));
+                                break;
+                            case "miércoles":
+                                schedulea[2] = new LinkedList<hours>();
+                                schedulea[2].addLast(new hours(new CourseGroup(g.getCourse(),g.getGroup()),g.getStartTime(),g.getEndTime()));
+                                break;
+                            case "jueves":
+                                schedulea[3] = new LinkedList<hours>();
+                                schedulea[3].addLast(new hours(new CourseGroup(g.getCourse(),g.getGroup()),g.getStartTime(),g.getEndTime()));
+                                break;
+                            case "viernes":
+                                schedulea[4] = new LinkedList<hours>();
+                                schedulea[4].addLast(new hours(new CourseGroup(g.getCourse(),g.getGroup()),g.getStartTime(),g.getEndTime()));
+                                break;
+                            case "sábado":
+                                schedulea[5] = new LinkedList<hours>();
+                                schedulea[5].addLast(new hours(new CourseGroup(g.getCourse(),g.getGroup()),g.getStartTime(),g.getEndTime()));
+                                break;
+                            case "domingo":
+                                schedulea[6] = new LinkedList<hours>();
+                                schedulea[6].addLast(new hours(new CourseGroup(g.getCourse(),g.getGroup()),g.getStartTime(),g.getEndTime()));
+                                break;
+                            default:
+                                break;
+
+                        }
+                    }
+                }
+            }
+            sec_list = (LinkedList) cgaux.clone();
+            scaux = (LinkedList<hours> []) schedulea.clone();
+            schedule.addLast(new Schedule(studentCourseGroup.get(i).getID(),scaux));
+            cgaux.clear();
+            for(int k = 0; k<schedulea.length;k++){
+                schedulea[k] = null;
+            }
+        }
+    }
 
     public static void studentGroupsSpecials(){
         for(Group g: groups){
@@ -91,36 +148,6 @@ class FinalProject {
         }
     }
 
-    public static LinkedList<Class> fillGroupsList(LinkedList<Student> studentCourseGroup,
-                                                   LinkedList<StudenMI> disabled) {
-        LinkedList<Class> list = new LinkedList<>();
-
-        int i = 0;
-        for (Student s: studentCourseGroup) {
-            for (CourseGroup g: s.classes) {
-                if (s.classes.get(i).course.equals(g.course) && s.classes.get(i).group.equals(g.group)) {
-                    LinkedList<Student> students = new LinkedList<>();
-                    LinkedList<StudenMI> problematic = new LinkedList<>();
-                    int j = 0;
-                    for (Student e: studentCourseGroup) {
-                        if (e.classes.get(j).group.equals(s.classes.get(i).group) && e.classes.get(j).course.equals(g.course)) {
-                            students.addLast(e);
-                        }
-                        for (StudenMI mi: disabled) {
-                            if ((mi.Student_ID.equals(e.ID)) && mi.MobilityImpairment || (mi.Student_ID.equals(s.ID) && mi.MobilityImpairment)) {
-                                problematic.addLast(mi);
-                            }
-                        }
-                    }
-                    list.addLast(new Class(g, students, problematic));
-                    j++;
-                }
-            }
-            i++;
-        }
-
-        return list;
-    }
 
     public static int getDistance(String a, String b, Graph map){
 
@@ -625,19 +652,16 @@ class Group {
     }
 }
 
-class Class {
+class hours{
+
     CourseGroup courseGroup;
-    LinkedList<Student> students;
-    LinkedList<StudenMI> reducedMobilityStudents;
+    String in;
+    String end;
 
-    public boolean hasDisabledStudents() {
-        return !reducedMobilityStudents.isEmpty();
-    }
-
-    public Class(CourseGroup courseGroup, LinkedList<Student> students, LinkedList<StudenMI> reducedMobilityStudents) {
+    public hours(CourseGroup courseGroup, String in, String end) {
         this.courseGroup = courseGroup;
-        this.students = students;
-        this.reducedMobilityStudents = reducedMobilityStudents;
+        this.in = in;
+        this.end = end;
     }
 
     public CourseGroup getCourseGroup() {
@@ -648,20 +672,63 @@ class Class {
         this.courseGroup = courseGroup;
     }
 
-    public LinkedList<Student> getStudents() {
-        return students;
+    public String getIn() {
+        return in;
     }
 
-    public void setStudents(LinkedList<Student> students) {
-        this.students = students;
+    public void setIn(String in) {
+        this.in = in;
     }
 
-    public LinkedList<StudenMI> getReducedMobilityStudents() {
-        return reducedMobilityStudents;
+    public String getEnd() {
+        return end;
     }
 
-    public void setReducedMobilityStudents(LinkedList<StudenMI> reducedMobilityStudents) {
-        this.reducedMobilityStudents = reducedMobilityStudents;
+    public void setEnd(String end) {
+        this.end = end;
+    }
+
+    @Override
+    public String toString() {
+        return "hours{" +
+                "courseGroup=" + courseGroup +
+                ", in='" + in + '\'' +
+                ", end='" + end + '\'' +
+                '}';
+    }
+}
+
+class Schedule{
+    String ID;
+    LinkedList<hours> [] hours = new LinkedList[7];
+
+    public Schedule(String ID, LinkedList<hours>[] prueba) {
+        this.ID = ID;
+        this.hours = prueba;
+    }
+
+    public String getID() {
+        return ID;
+    }
+
+    public void setID(String ID) {
+        this.ID = ID;
+    }
+
+    public LinkedList<hours>[] getPrueba() {
+        return hours;
+    }
+
+    public void setPrueba(LinkedList<hours>[] prueba) {
+        this.hours = prueba;
+    }
+
+    @Override
+    public String toString() {
+        return "Schedule{" +
+                "ID='" + ID + '\'' +
+                ", prueba=" + Arrays.toString(hours) +
+                '}';
     }
 }
 
