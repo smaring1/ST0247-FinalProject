@@ -26,6 +26,7 @@ class FinalProject {
     static LinkedList<Edge> aux = new LinkedList<Edge>();
     static LinkedList<specialGroupClass> specialClassrooms = new LinkedList<specialGroupClass>();
     static LinkedList<Group> groupsStudentsS = new LinkedList<Group>();
+    static LinkedList<Class> studentLists = new LinkedList<Class>();
 
     public static void main(String[] args) {
 
@@ -55,7 +56,9 @@ class FinalProject {
 
         specialClassroomsFill();
         studentGroupsSpecials();
+        studentLists = fillGroupsList(studentCourseGroup, MI);
         //System.out.println(getDistance("19","27",map));
+
 
     }
     
@@ -64,7 +67,7 @@ class FinalProject {
     public static void studentGroupsSpecials(){
         for(Group g: groups){
             for(specialGroupClass s: specialClassrooms){
-                if(g.getClassroom()==s.getClassroom()){
+                if(g.getClassroom().equals(s.getClassroom())){
                     groupsStudentsS.addLast(g);
                     groups.remove(g);
                 }
@@ -81,14 +84,29 @@ class FinalProject {
                     Matcher mat = pat.matcher(t.getType());
                     if(mat.matches()){
                         specialClassrooms.addLast(new specialGroupClass(g.getCourse(),g.getClassroomNumber()));
-                        System.out.println(specialClassrooms.size());
+                        //System.out.println(specialClassrooms.size());
                     }
                 }
             }
         }
-
     }
 
+    public static LinkedList<Class> fillGroupsList(LinkedList<Student> studentCourseGroup,
+                                                   LinkedList<StudenMI> disabled) {
+        LinkedList<Class> list = new LinkedList<>();
+
+        int i = 0;
+        for (Student s: studentCourseGroup) {
+            for (CourseGroup g: s.getClasses()) {
+                if (s.classes.get(i).course.equals(g.course) && s.classes.get(i).group.equals(g.group)) {
+                    //TODO: Implementar porque no me dio el ki cerebral o cambiar lo que llevo
+                }
+            }
+            i++;
+        }
+
+        return list;
+    }
 
     public static int getDistance(String a, String b, Graph map){
 
@@ -593,7 +611,45 @@ class Group {
     }
 }
 
+class Class {
+    CourseGroup courseGroup;
+    LinkedList<Student> students;
+    LinkedList<StudenMI> reducedMobilityStudents;
 
+    public boolean hasDisabledStudents() {
+        return !reducedMobilityStudents.isEmpty();
+    }
+
+    public Class(CourseGroup courseGroup, LinkedList<Student> students, LinkedList<StudenMI> reducedMobilityStudents) {
+        this.courseGroup = courseGroup;
+        this.students = students;
+        this.reducedMobilityStudents = reducedMobilityStudents;
+    }
+
+    public CourseGroup getCourseGroup() {
+        return courseGroup;
+    }
+
+    public void setCourseGroup(CourseGroup courseGroup) {
+        this.courseGroup = courseGroup;
+    }
+
+    public LinkedList<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(LinkedList<Student> students) {
+        this.students = students;
+    }
+
+    public LinkedList<StudenMI> getReducedMobilityStudents() {
+        return reducedMobilityStudents;
+    }
+
+    public void setReducedMobilityStudents(LinkedList<StudenMI> reducedMobilityStudents) {
+        this.reducedMobilityStudents = reducedMobilityStudents;
+    }
+}
 
 class Classroom {
     String classroomNum;
