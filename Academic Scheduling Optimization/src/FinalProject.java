@@ -57,11 +57,13 @@ class FinalProject {
         specialClassroomsFill();
         studentGroupsSpecials();
         scheduleFill();
+        String block = "";
+        int aux3 = 0;
         nearestChange(map);
-        System.out.println(schedule.size());
         for (int i = 0; i < schedule.size(); i++) {
-           System.out.println(schedule.get(i));
+            System.out.println("DES: " + schedule.get(i));
         }
+
 
     }
 
@@ -69,21 +71,41 @@ class FinalProject {
 
     public static void nearestChange(Graph map){
         String block = "";
+        int aux3 = 0;
+        int cont = 0;
+
         for(int i = 0; i<schedule.size();i++){
             for (int j = 0; j < schedule.get(i).getPrueba().length; j++) {
                 if(schedule.get(i).getPrueba()[j]!=null){
                     for (int k = 0; k < schedule.get(i).getPrueba()[j].size(); k++) {
                         block = schedule.get(i).getPrueba()[j].get(k).getBlock();
-                        for(Vertex v: map.getNodes()){
-                            if(v.getName().equals(block)){
-                                System.out.println(v.nearestAccessibleBlock(classrooms).getName());
-                                schedule.get(i).getPrueba()[j].get(k).setBlock(v.nearestAccessibleBlock(classrooms).getName());
+                        for (Vertex v : map.getNodes()) {
+                            if (v.getName().equals(block)) {
+                                if (isMI(schedule.get(i).getID())) {
+                                    schedule.get(i).getPrueba()[j].get(k).setBlock(v.nearestAccessibleBlock(classrooms).getName());
+                                    aux3+=getDistance(block,v.nearestAccessibleBlock(classrooms).getName(),map);
+                                    cont++;
+                                } else {
+                                    schedule.get(i).getPrueba()[j].get(k).setBlock(v.nearestBlock(classrooms).getName());
+                                    aux3+=getDistance(block,v.nearestAccessibleBlock(classrooms).getName(),map);
+                                    cont++;
+                                }
                             }
                         }
                     }
                 }
             }
         }
+        System.out.println("PROM: "+aux3/cont+" "+cont);
+    }
+
+    public static boolean isMI(String ID){
+        for (StudenMI studenMI : MI) {
+            if (ID.equals(studenMI.getStudent_ID())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public static void scheduleFill(){
@@ -92,7 +114,7 @@ class FinalProject {
         LinkedList<hours> [] schedulea = new LinkedList[7];
         LinkedList<hours> [] scaux = new LinkedList[7];
 
-        for(int i = 0; i<100;i++){
+        for(int i = 0; i<200;i++){
             for(int j = 0; j < studentCourseGroup.get(i).getClasses().size();j++){
                 for(Group g: groups){
                     if(studentCourseGroup.get(i).getClasses().get(j).getCourse().equals(g.getCourse())){
@@ -942,6 +964,18 @@ class Vertex{
         Edge minValue = edges.peekFirst();
         for (int i = 1; i < edges.size(); i++) {
             if (edges.get(i).weight < minValue.weight && edges.get(i).destVertex.isAccessible(classrooms)) {
+                minValue = edges.get(i);
+
+            }
+        }
+        return minValue.destVertex;
+    }
+
+    public Vertex nearestBlock(LinkedList<Classroom> classrooms) {
+        LinkedList<Edge> edges = this.edgeList;
+        Edge minValue = edges.peekFirst();
+        for (int i = 1; i < edges.size(); i++) {
+            if (edges.get(i).weight < minValue.weight) {
                 minValue = edges.get(i);
 
             }
