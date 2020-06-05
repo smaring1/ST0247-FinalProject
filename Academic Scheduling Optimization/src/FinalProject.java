@@ -97,9 +97,23 @@ class FinalProject {
 
         int i = 0;
         for (Student s: studentCourseGroup) {
-            for (CourseGroup g: s.getClasses()) {
+            for (CourseGroup g: s.classes) {
                 if (s.classes.get(i).course.equals(g.course) && s.classes.get(i).group.equals(g.group)) {
-                    //TODO: Implementar porque no me dio el ki cerebral o cambiar lo que llevo
+                    LinkedList<Student> students = new LinkedList<>();
+                    LinkedList<StudenMI> problematic = new LinkedList<>();
+                    int j = 0;
+                    for (Student e: studentCourseGroup) {
+                        if (e.classes.get(j).group.equals(s.classes.get(i).group) && e.classes.get(j).course.equals(g.course)) {
+                            students.addLast(e);
+                        }
+                        for (StudenMI mi: disabled) {
+                            if ((mi.Student_ID.equals(e.ID)) && mi.MobilityImpairment || (mi.Student_ID.equals(s.ID) && mi.MobilityImpairment)) {
+                                problematic.addLast(mi);
+                            }
+                        }
+                    }
+                    list.addLast(new Class(g, students, problematic));
+                    j++;
                 }
             }
             i++;
