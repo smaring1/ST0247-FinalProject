@@ -30,18 +30,18 @@ class FinalProject {
 
     public static void main(String[] args) {
 
-        long startTime = System.currentTimeMillis(); // TIEMPO
+        long startTime = System.currentTimeMillis(); // TIME
 
         Graph map = dataFillMap("DistanciasBloques.csv");
         groups = dataFillGroup("grupos_semestre.csv");
         classrooms = dataFillClassroom("aulas.csv");             // LLAMADO A TODOS LOS FILL
         MI = dataFIllStudentMI("estudiantes_discapacitados.csv");
-       // studentCourseGroup = dataFillStudent("estudiante_curso_grupo.csv");
         studentCourseGroup = dataFillStudent("estudiante_curso_grupo.csv");
-        // OTROS
         groupType = classType();
-       // map.printGraph();
-        pruebaEstudianteHorario();
+
+        //-------------------------------------------------------------------------------------------------//
+
+
         long endTime = System.currentTimeMillis();
         long totalExecTime = endTime - startTime; // TIEMPO
         System.out.println("Total execution time: " + totalExecTime + " miliseconds");
@@ -49,6 +49,9 @@ class FinalProject {
         System.out.println("KB: " + (double) (Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / 1024);
         System.out.println("MB: " + (double) ((Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / 1024)/1024);
 
+        //-------------------------------------------------------------------------------------------------//
+
+        // SPECIAL CALLS
         for (Vertex x: map.getNodes()) {
             aux = x.getEdges();
             break;
@@ -57,18 +60,16 @@ class FinalProject {
         specialClassroomsFill();
         studentGroupsSpecials();
         scheduleFill();
-        String block = "";
-        int aux3 = 0;
         nearestChange(map);
-        for (int i = 0; i < schedule.size(); i++) {
-            System.out.println("DES: " + schedule.get(i));
-        }
-
 
     }
 
 
-
+    /**
+     * This method finds the nearest block
+     * given the current block information
+     * @param map
+     */
     public static void nearestChange(Graph map){
         String block = "";
         int aux3 = 0;
@@ -96,9 +97,16 @@ class FinalProject {
                 }
             }
         }
-        System.out.println("PROM: "+aux3/cont+" "+cont);
+        System.out.println("PROMEDIO DE DISTANCIA POR ESTUDIANTE: "+aux3/cont);
     }
 
+    /**
+     * This method returns if a student have a mobility
+     * impairment not.
+     * @param ID
+     * @return true if a student have a mobility impairment
+     * false if a student don't have a mobility impairment
+     */
     public static boolean isMI(String ID){
         for (StudenMI studenMI : MI) {
             if (ID.equals(studenMI.getStudent_ID())) {
@@ -108,6 +116,14 @@ class FinalProject {
         return false;
     }
 
+    /**
+     * This method fill the schedule of
+     * a student depending on the day when the class
+     * was scheduled.
+     *
+     * The information its stored in a 7-position array
+     * that represents each day of the week.
+     */
     public static void scheduleFill(){
         LinkedList<Schedule> cgaux = new LinkedList<>();
         LinkedList sec_list = new LinkedList();
@@ -165,6 +181,10 @@ class FinalProject {
         }
     }
 
+    /**
+     * This method discard all the special groups from
+     * groups list.
+     */
     public static void studentGroupsSpecials(){
         for(Group g: groups){
             for(specialGroupClass s: specialClassrooms){
@@ -176,12 +196,17 @@ class FinalProject {
         }
     }
 
+    /**
+     * This method defines if a classroom is special or not.
+     * A special classroom means if the classroom is a laboratory or if the
+     * classroom is a language center booth.
+     */
     public static void specialClassroomsFill(){
         String flag;
         Pattern pat = Pattern.compile("^Laboratorio.*|^Cabina.*");
         for(Group g: groups){
             for(groupTypeClass t: groupType){
-                if(g.getClassroom()==t.getClassroom()){
+                if(g.getClassroom().equals(t.getClassroom())){
                     Matcher mat = pat.matcher(t.getType());
                     if(mat.matches()){
                         specialClassrooms.addLast(new specialGroupClass(g.getCourse(),g.getClassroomNumber()));
@@ -192,7 +217,13 @@ class FinalProject {
         }
     }
 
-
+    /**
+     * This method found the distance between two blocks.
+     * @param a represents the first block
+     * @param b represents the second block
+     * @param map represents the graph
+     * @return the distance between "a" and "b"
+     */
     public static int getDistance(String a, String b, Graph map){
 
         LinkedList<Edge> edges = aux;
@@ -257,10 +288,6 @@ class FinalProject {
 
 
 
-    public static void pruebaEstudianteHorario(){
-      // 19 - 38
-
-    }
 
     /**
      * This method fills a Group Linked List with
@@ -468,33 +495,11 @@ class FinalProject {
 }
 
 
-class studendPGroups{
-    String ID;
-    LinkedList<Group> groups = new LinkedList<Group>();
-
-    public studendPGroups(String ID, LinkedList<Group> groups) {
-        this.ID = ID;
-        this.groups = groups;
-    }
-
-    public String getID() {
-        return ID;
-    }
-
-    public void setID(String ID) {
-        this.ID = ID;
-    }
-
-    public LinkedList<Group> getGroups() {
-        return groups;
-    }
-
-    public void setGroups(LinkedList<Group> groups) {
-        this.groups = groups;
-    }
-
-}
-
+/**
+ * This class represents each students
+ * with their list of courses that the
+ * students registered.
+ */
 class Student{
 
     String ID;
@@ -530,6 +535,10 @@ class Student{
     }
 }
 
+/**
+ * This class represents each courses
+ * with all the groups.
+ */
 class CourseGroup{
     String course;
     String group;
@@ -564,6 +573,10 @@ class CourseGroup{
     }
 }
 
+/**
+ * This class defines a special course
+ * for example laboratories or language booths.
+ */
 class specialGroupClass{
     String course;
     String classroom;
@@ -695,6 +708,16 @@ class Group {
     }
 }
 
+/**
+ * hours classs represents the schedule
+ * of a specific class.
+ *
+ * Given by an object type "courseGroup", start time, end time
+ * and the block.
+ *
+ * This information was taken from the dataset
+ */
+
 class hours{
 
     CourseGroup courseGroup;
@@ -753,6 +776,14 @@ class hours{
 
 }
 
+/**
+ * This class represents a schedule of students
+ * depending on the assigned ID and show a list
+ * with their classes represented by class "hours".
+ *
+ * This information was taken from the dataset
+ */
+
 class Schedule{
     String ID;
     LinkedList<hours> [] hours = new LinkedList[7];
@@ -785,6 +816,12 @@ class Schedule{
                 '}';
     }
 }
+
+
+/**
+ * This class represents all the classrooms
+ * in the dataset "aulas.csv".
+ */
 
 class Classroom {
     String classroomNum;
@@ -867,7 +904,12 @@ class Classroom {
     }
 }
 
-
+/**
+ * studentMI represents students who
+ * have mobility impairments and is represented by a Boolean variable.
+ *
+ * This information was taken from the dataset
+ */
 class StudenMI{
     String Student_ID;
     boolean MobilityImpairment;
@@ -902,7 +944,12 @@ class StudenMI{
     }
 }
 
-
+/**
+ * groupTypeClass represents all the classrooms
+ * with their respective description.
+ *
+ * This information was taken from the dataset
+ */
 class groupTypeClass{
     String classroom;
     String type;
@@ -936,6 +983,11 @@ class groupTypeClass{
                 '}';
     }
 }
+
+/**
+ * Vertex implementation found on the following link:
+ * https://medium.com/@mithratalluri/basic-graph-implementation-in-java-9ed12e328c57
+ */
 
 class Vertex{
     public String name;
@@ -1008,6 +1060,11 @@ class Vertex{
     }
 }
 
+/**
+ * Edge implementation found on the following link:
+ * https://medium.com/@mithratalluri/basic-graph-implementation-in-java-9ed12e328c57
+ */
+
 class Edge{
     public int weight;
     public Vertex destVertex;
@@ -1038,6 +1095,7 @@ class Edge{
  * Graph implementation found on the following link:
  * https://medium.com/@mithratalluri/basic-graph-implementation-in-java-9ed12e328c57
  */
+
 class Graph{
     public HashSet<Vertex> nodes;
 
