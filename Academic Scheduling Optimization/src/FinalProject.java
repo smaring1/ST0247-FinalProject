@@ -76,7 +76,7 @@ class FinalProject {
         int cont = 0;
 
         for(int i = 0; i<schedule.size();i++){
-            for (int j = 0; j < schedule.get(i).getPrueba().length; j++) {
+            for (int j = 0; j < 7; j++) {
                 if(schedule.get(i).getPrueba()[j]!=null){
                     for (int k = 0; k < schedule.get(i).getPrueba()[j].size(); k++) {
                         block = schedule.get(i).getPrueba()[j].get(k).getBlock();
@@ -117,11 +117,11 @@ class FinalProject {
     }
 
     /**
-     * This method fill the schedule of
+     * This method fills the schedule of
      * a student depending on the day when the class
      * was scheduled.
      *
-     * The information its stored in a 7-position array
+     * The information is stored in a 7-position array
      * that represents each day of the week.
      */
     public static void scheduleFill(){
@@ -182,8 +182,9 @@ class FinalProject {
     }
 
     /**
-     * This method discard all the special groups from
-     * groups list.
+     * This method discards all the special groups from
+     * groups list. In order to prioritize them in their
+     * specific classrooms
      */
     public static void studentGroupsSpecials(){
         for(Group g: groups){
@@ -241,7 +242,7 @@ class FinalProject {
     /**
      * This method fills an Enrollment Linked List with
      * the dataset given.
-     * @param file
+     * @param file the dataset file
      * @return a Linked List with the data ready
      * to be manipulated
      */
@@ -292,7 +293,7 @@ class FinalProject {
     /**
      * This method fills a Group Linked List with
      * the dataset given.
-     * @param file
+     * @param file the dataset file
      * @return a Linked List with the data ready
      * to be manipulated
      */
@@ -310,7 +311,7 @@ class FinalProject {
                 // Limpieza de datos innecesarios
                if(!fields[6].equals("00000")) {
                   //  System.out.println(Arrays.toString(fields));
-                  unnecesary.addLast(fields[0]);
+                    unnecesary.addLast(fields[0]);
                     group.addLast(new Group(fields[0], fields[1], fields[2], fields[3], fields[4], fields[5], fields[6]));
                 }
                 line = br.readLine();
@@ -327,7 +328,7 @@ class FinalProject {
     /**
      * This method fills a Classroom Linked List with
      * the dataset given.
-     * @param file
+     * @param file the dataset file
      * @return a Linked List with the data ready
      * to be manipulated
      */
@@ -361,7 +362,7 @@ class FinalProject {
     /**
      * This method fills a Reduced Movility Students
      * Linked List with the given dataset.
-     * @param file
+     * @param file the dataset file
      * @return a Linked List with the data ready
      * to be manipulated
      */
@@ -453,7 +454,7 @@ class FinalProject {
         return map;
     }
 
-
+    //TODO: Document this method
     public static LinkedList<groupTypeClass> classType(){
         LinkedList<groupTypeClass> groupType1 = new LinkedList<groupTypeClass>();
 
@@ -482,16 +483,6 @@ class FinalProject {
         }
         return result;
     }
-
-
-
-    /**
-     * This method changes the location for a group
-     * @param source the classroom in which a group is assigned.
-     * @param destination the classroom where the group will be moved.
-     * @return true if the change was succesfully done, false otherwise.
-     */
-
 }
 
 
@@ -505,27 +496,53 @@ class Student{
     String ID;
     LinkedList<CourseGroup> classes = new LinkedList<CourseGroup>();
 
+    /**
+     * Constructor for Student data type
+     * @param ID the unique ID that each student has
+     * @param classesList The classes in which a student is enrolled
+     */
     public Student(String ID, LinkedList<CourseGroup> classesList) {
         this.ID = ID;
         classes = classesList;
     }
 
+    /**
+     * Getter for Student ID parameter
+     * @return Student ID
+     */
     public String getID() {
         return ID;
     }
 
+    /**
+     * Setter for Student ID parameter
+     * @param ID Student ID
+     */
     public void setID(String ID) {
         this.ID = ID;
     }
 
+    /**
+     * Getter for Student classes parameter
+     * @return classes
+     */
     public LinkedList<CourseGroup> getClasses() {
         return classes;
     }
 
+    /**
+     * Setter for Student classes parameter
+     * @param classes for a Student
+     */
     public void setClasses(LinkedList<CourseGroup> classes) {
         this.classes = classes;
     }
 
+    /**
+     * This method helps showing the data contained
+     * in a Student instance
+     * @return String with the data
+     */
     @Override
     public String toString() {
         return "Student{" +
@@ -543,27 +560,53 @@ class CourseGroup{
     String course;
     String group;
 
+    /**
+     * Constructor for CourseGroup data type
+     * @param course the course ID
+     * @param group the group number
+     */
     public CourseGroup(String course, String group) {
         this.course = course;
         this.group = group;
     }
 
+    /**
+     * Getter for CourseGroup course parameter
+     * @return course ID
+     */
     public String getCourse() {
         return course;
     }
 
+    /**
+     * Setter for CourseGroup course parameter
+     * @param course course ID
+     */
     public void setCourse(String course) {
         this.course = course;
     }
 
+    /**
+     * Getter for CourseGroup group parameter
+     * @return group number
+     */
     public String getGroup() {
         return group;
     }
 
+    /**
+     * Setter for CourseGroup group parameter
+     * @param group group number
+     */
     public void setGroup(String group) {
         this.group = group;
     }
 
+    /**
+     * This method helps showing the data contained
+     * in a CourseGroup instance
+     * @return String with the data
+     */
     @Override
     public String toString() {
         return "CourseGroup{" +
@@ -575,29 +618,51 @@ class CourseGroup{
 
 /**
  * This class defines a special course
- * for example laboratories or language booths.
+ * for example, laboratories or language booths.
  */
 class specialGroupClass{
     String course;
     String classroom;
 
+    /**
+     * Constructor for specialGroupClass
+     * data type
+     * @param course the course ID
+     * @param classroom the number of the classroom
+     */
     public specialGroupClass(String course, String classroom) {
         this.course = course;
         this.classroom = classroom;
     }
 
+    /**
+     * Getter for specialGroupClass course parameter
+     * @return course ID
+     */
     public String getCourse() {
         return course;
     }
 
+    /**
+     * Setter for specialGroupClass course parameter
+     * @param course course ID
+     */
     public void setCourse(String course) {
         this.course = course;
     }
 
+    /**
+     * Getter for specialGroupClass classroom parameter
+     * @return classroom number
+     */
     public String getClassroom() {
         return classroom;
     }
 
+    /**
+     * Setter for specialGroupClass classroom parameter
+     * @param classroom classroom number
+     */
     public void setClassroom(String classroom) {
         this.classroom = classroom;
     }
@@ -616,6 +681,16 @@ class Group {
     String endTime; //TODO: Lo mismo con este dato
     String classroom;
 
+    /**
+     * Constructor for Group data type
+     * @param course course ID
+     * @param group group number
+     * @param professor professor ID
+     * @param day week day for the session
+     * @param startTime time at which the session begins
+     * @param endTime time at which the session ends
+     * @param classroom classroom number at which the class happens
+     */
     public Group(String course, String group, String professor, String day, String startTime, String endTime, String classroom) {
         this.course = course;
         this.group = group;
@@ -626,60 +701,112 @@ class Group {
         this.classroom = classroom;
     }
 
+    /**
+     * Getter for Group course parameter
+     * @return course ID
+     */
     public String getCourse() {
         return course;
     }
 
+    /**
+     * Setter for Group course parameter
+     * @param course course ID
+     */
     public void setCourse(String course) {
         this.course = course;
     }
 
+    /**
+     * Getter for Group group number parameter
+     * @return group number
+     */
     public String getGroup() {
         return group;
     }
 
+    /**
+     * Setter for Group group number parameter
+     * @param group group number
+     */
     public void setGroup(String group) {
         this.group = group;
     }
 
+    /**
+     * Getter for Group professor parameter
+     * @return professor ID
+     */
     public String getProfessor() {
         return professor;
     }
 
+    /**
+     * Setter for Group professor parameter
+     * @param professor professor ID
+     */
     public void setProfessor(String professor) {
         this.professor = professor;
     }
 
+    /**
+     * Getter for the Group day of class
+     * @return day of class
+     */
     public String getDay() {
         return day;
     }
 
+    /**
+     * Setter for the Group day of class
+     * @param day day of class
+     */
     public void setDay(String day) {
         this.day = day;
     }
 
+    /**
+     * Getter for the Group class start time
+     * @return start time
+     */
     public String getStartTime() {
         return startTime;
     }
 
+    /**
+     * Setter for the Group class start time
+     * @param startTime start time
+     */
     public void setStartTime(String startTime) {
         this.startTime = startTime;
     }
 
+    /**
+     * Getter for the Group class end time
+     * @return end time
+     */
     public String getEndTime() {
         return endTime;
     }
 
+    /**
+     * Setter for the Group class end time
+     * @param endTime end time
+     */
     public void setEndTime(String endTime) {
         this.endTime = endTime;
     }
 
+    /**
+     * Getter for the Group classroom number
+     * @return classroom number
+     */
     public String getClassroom() {
         return classroom;
     }
 
     /**
-     * This method returns the block in whick a classroom is
+     * This method returns the block in which a classroom is
      * @return block
      */
     public String getClassroomBlock() {
@@ -709,7 +836,7 @@ class Group {
 }
 
 /**
- * hours classs represents the schedule
+ * hours class represents the schedule
  * of a specific class.
  *
  * Given by an object type "courseGroup", start time, end time
@@ -725,6 +852,13 @@ class hours{
     String end;
     String block;
 
+    /**
+     * Constructor for hours data type
+     * @param courseGroup the course and group for the class
+     * @param in the time at which the class starts
+     * @param end the time at which the class ends
+     * @param block the block in which a class happens
+     */
     public hours(CourseGroup courseGroup, String in, String end, String block) {
         this.courseGroup = courseGroup;
         this.in = in;
@@ -732,38 +866,77 @@ class hours{
         this.block = block;
     }
 
+    /**
+     * Getter for CourseGroup object parameter
+     * @return course and group for a class
+     */
     public CourseGroup getCourseGroup() {
         return courseGroup;
     }
 
+    /**
+     * Setter for CourseGroup parameter
+     * @param courseGroup CourseGroup object
+     */
     public void setCourseGroup(CourseGroup courseGroup) {
         this.courseGroup = courseGroup;
     }
 
+    /**
+     * Getter for the class start time parameter
+     * @return the start time for the class
+     */
     public String getIn() {
         return in;
     }
 
+    /**
+     * Setter for the class start time parameter
+     * @param in the start time for the class
+     */
     public void setIn(String in) {
         this.in = in;
     }
 
+    /**
+     * Getter for the class end time parameter
+     * @return the end time for the class
+     */
     public String getEnd() {
         return end;
     }
 
+    /**
+     * Setter for the class end time parameter
+     * @param end the end time for the class
+     */
     public void setEnd(String end) {
         this.end = end;
     }
 
+    /**
+     * Getter for the block in which
+     * the class happens
+     * @return block for the class
+     */
     public String getBlock() {
         return block;
     }
 
+    /**
+     * Setter for the block in which
+     * the class happens
+     * @param block block for the class
+     */
     public void setBlock(String block) {
         this.block = block;
     }
 
+    /**
+     * This method helps showing the data contained
+     * in an hours instance
+     * @return String with the data
+     */
     @Override
     public String toString() {
         return "hours{" +
@@ -787,27 +960,54 @@ class hours{
 class Schedule{
     String ID;
     LinkedList<hours> [] hours = new LinkedList[7];
+
+    /**
+     * Constructor for Schedule data type
+     * @param ID the student ID
+     * @param prueba the busy hours for a student in each day
+     */
     public Schedule(String ID, LinkedList<hours>[] prueba) {
         this.ID = ID;
         this.hours = prueba;
     }
 
+    /**
+     * Getter for the ID parameter
+     * @return the student ID
+     */
     public String getID() {
         return ID;
     }
 
+    /**
+     * Setter for the ID parameter
+     * @param ID the student ID
+     */
     public void setID(String ID) {
         this.ID = ID;
     }
 
+    /**
+     * Getter for the busy hours during the week parameter
+     * @return busy hours for a student during the week
+     */
     public LinkedList<hours>[] getPrueba() {
         return hours;
     }
 
+    /**
+     * Setter for the busy hours during the week parameter
+     * @param prueba busy hours for a student during the week
+     */
     public void setPrueba(LinkedList<hours>[] prueba) {
         this.hours = prueba;
     }
 
+    /**
+     * This method helps showing the data contained
+     * in a Schedule instance
+     * @return String with the data
+     */
     @Override
     public String toString() {
         return "Schedule{" +
@@ -829,6 +1029,13 @@ class Classroom {
     int capacity;
     int access;
 
+    /**
+     * Constructor for the Classroom data type
+     * @param classroomNum the number for a classroom
+     * @param type the type of classroom
+     * @param capacity the capacity of a classroom
+     * @param access means if a classroom is accessible for wheelchairs
+     */
     public Classroom(String classroomNum, String type, int capacity, int access) {
         this.classroomNum = classroomNum;
         this.type = type;
@@ -836,13 +1043,17 @@ class Classroom {
         this.access = access;
     }
 
+    /**
+     * Getter for the classroom number parameter
+     * @return the classroom number
+     */
     public String getClassroomNum() {
         return classroomNum;
     }
 
     /**
-     * This method returns the block in whick a classroom is
-     * @return block
+     * This method returns the block in which a classroom is
+     * @return block in which a classroom is
      */
     public String getClassroomBlock() {
         String b = classroomNum;
@@ -865,34 +1076,69 @@ class Classroom {
         return b;
     }
 
+    /**
+     * Setter for the classroom number parameter
+     * @param classroomNum the classroom number
+     */
     public void setClassroomNum(String classroomNum) {
         this.classroomNum = classroomNum;
     }
 
+    /**
+     * Getter for the classroom type parameter
+     * @return the classroom type
+     */
     public String getType() {
         return type;
     }
 
+    /**
+     * Setter for the classroom type parameter
+     * @param type the classroom type
+     */
     public void setType(String type) {
         this.type = type;
     }
 
+    /**
+     * Getter for the classroom capacity
+     * @return the classroom capacity
+     */
     public int getCapacity() {
         return capacity;
     }
 
+    /**
+     * Setter for the classroom capacity
+     * @param capacity the classroom capacity
+     */
     public void setCapacity(int capacity) {
         this.capacity = capacity;
     }
 
+    /**
+     * Getter for the wheelchair accessibility
+     * of a classroom
+     * @return 1 if accessible, otherwise 0
+     */
     public int getAccess() {
         return access;
     }
 
+    /**
+     * Setter for the wheelchair accessibility
+     * of a classroom
+     * @param access 1 if accessible, otherwise 0
+     */
     public void setAccess(int access) {
         this.access = access;
     }
 
+    /**
+     * This method helps showing the data contained
+     * in a Classroom instance
+     * @return String with the data
+     */
     @Override
     public String toString() {
         return "Classroom{" +
@@ -914,27 +1160,53 @@ class StudenMI{
     String Student_ID;
     boolean MobilityImpairment;
 
+    /**
+     * Constructor for StudentMi data type
+     * @param student_ID the unique Student ID
+     * @param mobilityImpairment true if the student has mobility issues, otherwise false
+     */
     public StudenMI(String student_ID, boolean mobilityImpairment) {
         Student_ID = student_ID;
         MobilityImpairment = mobilityImpairment;
     }
 
+    /**
+     * Getter for the Student ID parameter
+     * @return the Student ID
+     */
     public String getStudent_ID() {
         return Student_ID;
     }
 
+    /**
+     * Setter for the Student ID parameter
+     * @param student_ID the Student ID
+     */
     public void setStudent_ID(String student_ID) {
         Student_ID = student_ID;
     }
 
+    /**
+     * Getter for the mobility status for a student
+     * @return true if the student has mobility issues, otherwise false
+     */
     public boolean isMobilityImpairment() {
         return MobilityImpairment;
     }
 
+    /**
+     * Setter for the mobility status for a student
+     * @param mobilityImpairment true if the student has mobility issues, otherwise false
+     */
     public void setMobilityImpairment(boolean mobilityImpairment) {
         MobilityImpairment = mobilityImpairment;
     }
 
+    /**
+     * This method helps showing the data contained
+     * in a StudenMI instance
+     * @return String with the data
+     */
     @Override
     public String toString() {
         return "StudenMI{" +
@@ -954,27 +1226,53 @@ class groupTypeClass{
     String classroom;
     String type;
 
+    /**
+     * Constructor for groupTypeClass data type
+     * @param classroom the classroom ID
+     * @param type the classroom type
+     */
     public groupTypeClass(String classroom, String type) {
         this.classroom = classroom;
         this.type = type;
     }
 
+    /**
+     * Getter for the classroom ID
+     * @return the classroom ID
+     */
     public String getClassroom() {
         return classroom;
     }
 
+    /**
+     * Setter for the classroom ID
+     * @param classroom the classroom ID
+     */
     public void setClassroom(String classroom) {
         this.classroom = classroom;
     }
 
+    /**
+     * Getter for the classroom type
+     * @return the classroom type
+     */
     public String getType() {
         return type;
     }
 
+    /**
+     * Setter for the classroom type
+     * @param type the classroom type
+     */
     public void setType(String type) {
         this.type = type;
     }
 
+    /**
+     * This method helps showing the data contained
+     * in a groupTypeClass instance
+     * @return String wuth the data
+     */
     @Override
     public String toString() {
         return "groupTypeClass{" +
@@ -993,12 +1291,21 @@ class Vertex{
     public String name;
     public LinkedList<Edge> edgeList;
 
-
+    /**
+     * Constructor for a Vertex
+     * in the graph
+     * @param name the name for the Vertex
+     */
     public Vertex(String name){
         this.name = name;
         edgeList = new LinkedList<>();
     }
 
+    /**
+     * Getter for the Edges that connect
+     * this Vertex with some other Vertexes
+     * @return list of edges
+     */
     public LinkedList<Edge> getEdgeList() {
         return edgeList;
     }
@@ -1008,6 +1315,7 @@ class Vertex{
      * This method finds the nearest block
      * that also has access for people with
      * mobility issues
+     * @param classrooms the list of classrooms in the university
      * @return a Vertex in the graph which
      * represents the block
      */
@@ -1023,6 +1331,12 @@ class Vertex{
         return minValue.destVertex;
     }
 
+    /**
+     * This method finds the nearest block
+     * given a block represented in a Vertex
+     * @param classrooms the list of classrooms in the university
+     * @return
+     */
     public Vertex nearestBlock(LinkedList<Classroom> classrooms) {
         LinkedList<Edge> edges = this.edgeList;
         Edge minValue = edges.peekFirst();
@@ -1051,10 +1365,19 @@ class Vertex{
         return false;
     }
 
+    /**
+     * Getter for a Vertex name
+     * @return the Vertex name
+     */
     public String getName(){
         return name;
     }
 
+    /**
+     * Getter for the edges in a
+     * Vertex.
+     * @return the edge list
+     */
     public LinkedList<Edge> getEdges(){
         return edgeList;
     }
@@ -1069,7 +1392,13 @@ class Edge{
     public int weight;
     public Vertex destVertex;
 
-
+    /**
+     * Constructor for an Edge
+     * between a couple of Vertexes
+     * in a weighted graph
+     * @param dest the destination Vertex
+     * @param w the weight of the connection
+     */
     public Edge(Vertex dest, int w){
         this.destVertex = dest;
         this.weight = w;
@@ -1077,15 +1406,31 @@ class Edge{
 
     /* can use this approach for an unweighted graph
         or better remove variable weight altogether from Edge class */
+    /**
+     * Constructor for an Edge
+     * between a couple of Vertexes
+     * in an unweighted graph
+     * @param dest the destination Vertex
+     */
     public Edge(Vertex dest){
         this.destVertex = dest;
         this.weight = 1;
     }
 
+    /**
+     * Getter fot the weight
+     * of a given Edge
+     * @return the weight of the Edge
+     */
     public int getWeight(){
         return weight;
     }
 
+    /**
+     * Getter for the destination
+     * Vertex of a given Edge
+     * @return the destination vertex of an Edge
+     */
     public Vertex getDestVertex(){
         return destVertex;
     }
@@ -1099,12 +1444,28 @@ class Edge{
 class Graph{
     public HashSet<Vertex> nodes;
 
+    /**
+     * Constructor for the Graph data type
+     */
     public Graph(){
         nodes = new HashSet<>();
     }
 
+    /**
+     * Getter for the nodes list
+     * in a Graph
+     * @return the nodes list
+     */
     public HashSet<Vertex> getNodes() { return nodes; }
 
+    /**
+     * This method adds an edge between
+     * two given Vertexes in the Graph
+     * @param v1 first Vertex
+     * @param v2 second Vertex
+     * @param weight the weight of the connection
+     * @return true if the addition could be done, otherwise false
+     */
     public boolean AddEdge(Vertex v1, Vertex v2, int weight){
         //since it's a directed graph
         v2.getEdges().add(new Edge(v1, weight));
@@ -1113,10 +1474,20 @@ class Graph{
             add v2.getEdges().add(new Edge(v1, weight)) also */
     }
 
+    /**
+     * This method adds a Vertex
+     * to the Graph
+     * @param v the Vertex object to ve added
+     * @return true if the addition could be done, otherwise false
+     */
     public boolean AddVertex(Vertex v){
         return nodes.add(v);
     }
 
+    /**
+     * This method prints the Graph
+     * as the nodes and their edges
+     */
     public void printGraph(){
         //I printed it like this. You can print it however you want though
         for(Vertex v : nodes){
@@ -1126,14 +1497,5 @@ class Graph{
             }
             System.out.print("\n");
         }
-    }
-
-    public boolean contains(Vertex v) {
-        for (Vertex w: nodes) {
-            if (v.getName().equals(w.getName())) {
-                return true;
-            }
-        }
-        return false;
     }
 }
